@@ -38,6 +38,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lBlock = new System.Windows.Forms.Label();
             this.bEatCheese = new System.Windows.Forms.Button();
+            this.bEquipHead = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lMousePowerOutput = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Wheel
@@ -107,7 +110,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(332, 132);
+            this.label2.Location = new System.Drawing.Point(332, 176);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 13);
             this.label2.TabIndex = 5;
@@ -116,7 +119,7 @@
             // lBlock
             // 
             this.lBlock.AutoSize = true;
-            this.lBlock.Location = new System.Drawing.Point(414, 132);
+            this.lBlock.Location = new System.Drawing.Point(414, 176);
             this.lBlock.Name = "lBlock";
             this.lBlock.Size = new System.Drawing.Size(35, 13);
             this.lBlock.TabIndex = 6;
@@ -124,7 +127,7 @@
             // 
             // bEatCheese
             // 
-            this.bEatCheese.Location = new System.Drawing.Point(29, 288);
+            this.bEatCheese.Location = new System.Drawing.Point(12, 288);
             this.bEatCheese.Name = "bEatCheese";
             this.bEatCheese.Size = new System.Drawing.Size(75, 23);
             this.bEatCheese.TabIndex = 7;
@@ -132,13 +135,44 @@
             this.bEatCheese.UseVisualStyleBackColor = true;
             this.bEatCheese.Click += new System.EventHandler(this.bEatCheese_Click);
             // 
+            // bEquipHead
+            // 
+            this.bEquipHead.Location = new System.Drawing.Point(109, 288);
+            this.bEquipHead.Name = "bEquipHead";
+            this.bEquipHead.Size = new System.Drawing.Size(86, 23);
+            this.bEquipHead.TabIndex = 7;
+            this.bEquipHead.Text = "Одеть шапку";
+            this.bEquipHead.UseVisualStyleBackColor = true;
+            this.bEquipHead.Click += new System.EventHandler(this.bEquipHead_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(332, 138);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Выход мышки";
+            // 
+            // lMousePowerOutput
+            // 
+            this.lMousePowerOutput.AutoSize = true;
+            this.lMousePowerOutput.Location = new System.Drawing.Point(414, 138);
+            this.lMousePowerOutput.Name = "lMousePowerOutput";
+            this.lMousePowerOutput.Size = new System.Drawing.Size(35, 13);
+            this.lMousePowerOutput.TabIndex = 6;
+            this.lMousePowerOutput.Text = "label2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 323);
+            this.Controls.Add(this.bEquipHead);
             this.Controls.Add(this.bEatCheese);
+            this.Controls.Add(this.lMousePowerOutput);
             this.Controls.Add(this.lBlock);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lhangry);
             this.Controls.Add(this.label4);
@@ -167,6 +201,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lBlock;
         private System.Windows.Forms.Button bEatCheese;
+        private System.Windows.Forms.Button bEquipHead;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lMousePowerOutput;
     }
 }
 

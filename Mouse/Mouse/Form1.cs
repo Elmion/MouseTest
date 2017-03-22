@@ -42,6 +42,7 @@ namespace Mouse
             lhangry.Text = mouse.Hangry.ToString();
             lPowerOUT.Text = wheel.AngleSpeed.ToString();
             lBlock.Text = block.EnablePower.ToString();
+            lMousePowerOutput.Text = mouse.PowerOUTBUFFERED.ToString();
             //if (Accelerate)
             //{
             //    speed += 0.9f;
@@ -81,17 +82,19 @@ namespace Mouse
         private void Wheel_MouseUp(object sender, MouseEventArgs e)
         {
             wheel.GetAcceletate();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
         private void bEatCheese_Click(object sender, EventArgs e)
         {
             mouse.MouseEat(new MathCore.Cheese());
+        }
+        private void bEquipHead_Click(object sender, EventArgs e)
+        {
+            mouse.Equip(new MathCore.MouseCap());
         }
     }
 }

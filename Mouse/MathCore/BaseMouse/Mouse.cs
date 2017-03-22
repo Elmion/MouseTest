@@ -19,6 +19,15 @@ namespace MathCore
         float EquvipmentArgument = 1.0f;
         float HeartTraningArgument = 1.0f;
         float _heartTik = 60.0f;
+        float Stress;
+
+        bool Male = true; // по умолчанию мужик.
+        Inventory _inventory;
+
+        /// <summary> Времянки
+        public float PowerOUTBUFFERED;
+        /// </summary>
+
         int StatusRun = 0;
         public int HeartTik
         {
@@ -31,22 +40,18 @@ namespace MathCore
         {
             MouseDNAPower = DNAPower;
             Hangry = 100;
+            _inventory = new Inventory();
         }
         public float PowerOUT()
         {
             _heartTik += HeartTraningArgument* (MAX_HEART_TIK - _heartTik) / MAX_HEART_TIK *20;
             LifeTime -= 0.2f;
-          //  StatusRun = 1;
+
+            //--------ВЫРЕЗАТЬ НАФИГ
+            PowerOUTBUFFERED = MouseDNAPower * MousePowerTrainingArgument * EquvipmentArgument;
+            //------------------
             return MouseDNAPower * MousePowerTrainingArgument * EquvipmentArgument;
         }
-        //public void GoToWheel()
-        //{
-        //    StatusRun = 1;
-        //}
-        //public void OutOfWheel()
-        //{
-        //    StatusRun = 0;
-        //}
         public void Update()
         {
             _heartTik -= HeartTraningArgument * SPEED_DEC_HEART_TIK;
@@ -58,6 +63,11 @@ namespace MathCore
             Hangry += food.GetColories;
             if (Hangry > MAX_HANGRY)
                 Hangry = MAX_HANGRY;
+        }
+        public void Equip(IEquipment e)
+        {
+            _inventory.PutInSlot(e);
+            EquvipmentArgument = _inventory.CalcEquipmentBonus();
         }
     }
 }
