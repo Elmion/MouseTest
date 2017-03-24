@@ -44,6 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseMouse\Cheese.cs" />
+    <Compile Include="Care\BloodStream.cs" />
+    <Compile Include="Care\BrainSystem.cs" />
+    <Compile Include="Care\DigestiveSystem.cs" />
+    <Compile Include="Care\FuncionalSystem.cs" />
+    <Compile Include="Care\Health.cs" />
+    <Compile Include="Care\HeartSystem.cs" />
+    <Compile Include="Care\IMentalWork.cs" />
+    <Compile Include="Care\LungsSystem.cs" />
+    <Compile Include="Care\Therapy.cs" />
     <Compile Include="Socium\BetterHalf.cs" />
     <Compile Include="Socium\Children.cs" />
     <Compile Include="Socium\Family.cs" />

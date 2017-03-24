@@ -70,7 +70,7 @@ namespace MathCore
         }
         public void GetAcceletate()
         {
-            AngleSpeed = (AngleSpeed * _inertia + _currentMouse.PowerOUT()) / _inertia;
+            AngleSpeed = (AngleSpeed * _inertia + _currentMouse.PhisicPower()) / _inertia;
         }
         public bool ConsumePower(float powerOut,float deltaTime)
         {

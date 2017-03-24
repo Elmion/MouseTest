@@ -42,7 +42,7 @@ namespace MathCore
             Hangry = 100;
             _inventory = new Inventory();
         }
-        public float PowerOUT()
+        public float PhisicPower()
         {
             _heartTik += HeartTraningArgument* (MAX_HEART_TIK - _heartTik) / MAX_HEART_TIK *20;
             LifeTime -= 0.2f;
@@ -51,6 +51,10 @@ namespace MathCore
             PowerOUTBUFFERED = MouseDNAPower * MousePowerTrainingArgument * EquvipmentArgument;
             //------------------
             return MouseDNAPower * MousePowerTrainingArgument * EquvipmentArgument;
+        }
+        public float MentalPower()
+        {
+
         }
         public void Update()
         {

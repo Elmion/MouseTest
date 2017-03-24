@@ -11,7 +11,5 @@ namespace MathCore.Socium
         float Introvert = 0;
         float Emotion = 0;
         List<SocialLink> Links;
-
     }
-
 }
