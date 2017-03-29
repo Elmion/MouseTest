@@ -89,10 +89,24 @@ namespace Health
                 Tuk();
                 _pressure += Power_Trust;
                 TimeDeltaTuk += TimeTukCicle;
-                if (TargetРressure > _pressure) Acceleration(Power.VeryEasy);
-                if (TargetРressure < _pressure) Deceleration(Power.VeryEasy);
+                CorrectPressure();
             }
         }
+        void CorrectPressure()
+        {
+            var odds = Math.Abs(TargetРressure - _pressure);
+            Power ChangePower = Power.VeryEasy;
+            if (0 < odds && odds <= 1) ChangePower = Power.VeryEasy;
+            if (1 < odds && odds <= 2) ChangePower = Power.Easy;
+            if (3 < odds && odds <= 4) ChangePower = Power.Medium;
+            if (4 < odds && odds <= 6) ChangePower = Power.Hard;
+            if (6 < odds && odds <= 10) ChangePower = Power.Critical;
+            if (10 < odds) ChangePower = Power.Maximum;
+
+            if (TargetРressure > _pressure) Acceleration(ChangePower);
+            if (TargetРressure < _pressure) Deceleration(ChangePower);
+        }
+
     }
     public enum Power : int
     {
