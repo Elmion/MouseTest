@@ -5,7 +5,7 @@ namespace Core
     internal class cUnit
     {
         public RectangleF Rect;
-        private PointF PrePosition;
+        public PointF PrePosition;
         public PointF PointPosition;
 
         Races race;
@@ -13,7 +13,7 @@ namespace Core
         int BaseAttack;
         int BaseAttackDistance;
         int HP;
-        int BaseRunSpeed;
+        public float BaseRunSpeed;
 
         public sbyte Team
         {
