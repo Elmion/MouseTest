@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTowerConcept", "TestTowerConcept\TestTowerConcept.csproj", "{42A6CFB2-2278-42D4-A986-56A485C13150}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{BAD917BE-E36D-4783-9E85-E017A2EFC65D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42A6CFB2-2278-42D4-A986-56A485C13150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A6CFB2-2278-42D4-A986-56A485C13150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A6CFB2-2278-42D4-A986-56A485C13150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A6CFB2-2278-42D4-A986-56A485C13150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
