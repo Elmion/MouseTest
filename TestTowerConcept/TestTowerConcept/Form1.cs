@@ -22,7 +22,7 @@ namespace TestTowerConcept
             core = new GameCore();
             ucFieldView1.Init(core);
             t = new Timer();
-            t.Interval = 10;
+            t.Interval = 30;
             t.Tick += T_Tick;t.Start();
         }
         private void T_Tick(object sender, EventArgs e)

@@ -50,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleField.cs" />
-    <Compile Include="Card.cs" />
+    <Compile Include="Cards\Card.cs" />
+    <Compile Include="Cards\Mage.cs" />
+    <Compile Include="Cards\Ogr.cs" />
     <Compile Include="cUnit.cs" />
     <Compile Include="GameCore.cs" />
     <Compile Include="Player.cs" />

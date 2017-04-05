@@ -54,7 +54,7 @@ namespace Core
         {
             foreach (var unit in Units)
             {
-                unit.Draw(g);
+                unit.Draw(g,50);
             }
         }     
     }

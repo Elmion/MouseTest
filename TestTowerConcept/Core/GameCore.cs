@@ -18,8 +18,10 @@ namespace Core
             Player1 = new Player(0);
             Player2 = new Player(1);
             Battle = new BattleField();
-            Battle.Units.Add(new cUnit(new Card() { RunSpeed = 2, Width = 10, Height = 10 }, 0));
-            Battle.Units.Add(new cUnit(new Card() {RunSpeed = 5, Width = 15, Height = 15 }, 1));
+            Battle.Units.Add(new cUnit(new Mage() , 0));
+            Battle.Units.Add(new cUnit(new Ogr(), 0));
+            Battle.Units.Add(new cUnit(new Ogr() , 1));
+            Battle.Units.Add(new cUnit(new Mage(), 1));
             DoStep += Update;
         }
        public void Update()
