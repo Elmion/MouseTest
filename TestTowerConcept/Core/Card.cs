@@ -34,7 +34,7 @@ namespace Core
         }
         public Card GetCardClone()
         {
-            Card = new Card()
+            return new Card();
         }
     }
 }

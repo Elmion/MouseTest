@@ -8,10 +8,11 @@ namespace Core
 {
     class Player
     {
+        int Team { get; set; }
         List<Card> Cardbook;
-        public Player()
+        public Player(int Team)
         {
-
+            this.Team = Team;
         }
     }
 }

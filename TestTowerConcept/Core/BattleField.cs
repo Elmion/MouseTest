@@ -7,10 +7,13 @@ using System.Drawing;
 
 namespace Core
 {
-    class BattleField
+   public class BattleField
     {
-        List<cUnit> Units;
-
+        internal List<cUnit> Units;
+        public BattleField()
+        {
+            Units = new List<cUnit>();
+        }
         public void AllMove()
         {
             foreach (var unit in Units)
@@ -46,8 +49,14 @@ namespace Core
                 }
                
             }
-        }        
-
+        }   
+        internal void Draw(Graphics g)
+        {
+            foreach (var unit in Units)
+            {
+                unit.Draw(g);
+            }
+        }     
     }
 }
 public enum FieldLength :int
