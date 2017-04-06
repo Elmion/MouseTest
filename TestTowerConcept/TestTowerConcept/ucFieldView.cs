@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CommonElement;
 
 namespace TestTowerConcept
 {
@@ -27,7 +28,11 @@ namespace TestTowerConcept
         }
         private void ucFieldView_Paint(object sender, PaintEventArgs e)
         {
-            Game.Draw(g);     
+          List<SceneItemInfo> listDrawElement = Game.GetDrawInfo();
+            foreach (SceneItemInfo itemInfo in listDrawElement)
+            {
+                g.DrawRectangle(new Pen(Brushes.Red), new Rectangle((int)(itemInfo.PositionX - itemInfo.Bounds.Width / 2), (int)(itemInfo.PositionY - itemInfo.Bounds.Height / 2 + 50), (int)itemInfo.Bounds.Width, (int)itemInfo.Bounds.Height));
+            }        
         }
     }
 }

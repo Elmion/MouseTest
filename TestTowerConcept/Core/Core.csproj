@@ -50,9 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleField.cs" />
-    <Compile Include="Cards\Card.cs" />
-    <Compile Include="Cards\Mage.cs" />
-    <Compile Include="Cards\Ogr.cs" />
     <Compile Include="cUnit.cs" />
     <Compile Include="GameCore.cs" />
     <Compile Include="Player.cs" />
@@ -80,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonElement\CommonElement.csproj">
+      <Project>{5d02f43a-5cab-458e-aae2-dc0669f29a03}</Project>
+      <Name>CommonElement</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

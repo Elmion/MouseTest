@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using CommonElement;
 
 namespace Core
 {
@@ -23,14 +24,31 @@ namespace Core
             Battle.Units.Add(new cUnit(new Ogr() , 1));
             Battle.Units.Add(new cUnit(new Mage(), 1));
             DoStep += Update;
+           
         }
        public void Update()
         {
             Battle.AllMove();
         }
-       public void Draw(Graphics g)
+       public List<SceneItemInfo> GetDrawInfo()
         {
-            Battle.Draw(g);
+            List<SceneItemInfo> outList = new List<SceneItemInfo>();
+            foreach (cUnit item in Battle.Units)
+            {
+                SceneItemInfo s = new SceneItemInfo();
+                s.Team = item.Team;
+                s.PositionX = item.PointPosition.X;
+                s.PositionY = item.PointPosition.Y;
+                s.typeObject = item.FreezedCard.GetType();
+                s.Bounds = item.Rect;
+                outList.Add(s);
+            }
+            return outList;
         }
+        public void CreateCard(int side, Card c)
+        {
+            Battle.Units.Add(new cUnit(new Mage(), (sbyte)side));
+        }
+
     }
 }

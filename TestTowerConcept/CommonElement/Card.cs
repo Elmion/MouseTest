@@ -2,7 +2,7 @@
 
 namespace Core
 {
-    internal class Card
+    public  class Card
     {
         public virtual int Attack { get; set; }
         public virtual int AttackDistance { get; set; }

@@ -10,6 +10,7 @@ namespace Core
    public class BattleField
     {
         internal List<cUnit> Units;
+        int GroundLevel;
         public BattleField()
         {
             Units = new List<cUnit>();
@@ -28,7 +29,6 @@ namespace Core
                     {
                         if (unit.GetMoveRect().IntersectsWith(unit2.GetMoveRect()))
                         {
-
                             var deltaS = unit.Rect.Width / 2 + unit2.Rect.Width / 2;
                             var S = Math.Abs(unit.PrePosition.X - unit2.PrePosition.X);
                             var v1 = unit.BaseRunSpeed;
@@ -36,18 +36,17 @@ namespace Core
                             if (unit.Team == 0)
                             {
                                 unit.SetPosition(new PointF(unit.PrePosition.X + (S - deltaS) * v1 / (v1 + v2), unit.PrePosition.Y));
-                                unit2.SetPosition(new PointF(unit2.PrePosition.X - (S - deltaS) * v2 / (v1 + v2), unit.PrePosition.Y));
+                                unit2.SetPosition(new PointF(unit2.PrePosition.X - (S - deltaS) * v2 / (v1 + v2), unit2.PrePosition.Y));
                             }
                             else
                             {
                                 unit.SetPosition(new PointF(unit.PrePosition.X - (S - deltaS) * v1 / (v1 + v2), unit.PrePosition.Y));
-                                unit2.SetPosition(new PointF(unit2.PrePosition.X + (S - deltaS) * v2 / (v1 + v2), unit.PrePosition.Y));
+                                unit2.SetPosition(new PointF(unit2.PrePosition.X + (S - deltaS) * v2 / (v1 + v2), unit2.PrePosition.Y));
                             }
                         }
                     }
 
                 }
-               
             }
         }   
         internal void Draw(Graphics g)

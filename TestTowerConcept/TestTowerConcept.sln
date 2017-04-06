@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTowerConcept", "TestTow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{BAD917BE-E36D-4783-9E85-E017A2EFC65D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonElement", "CommonElement\CommonElement.csproj", "{5D02F43A-5CAB-458E-AAE2-DC0669F29A03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAD917BE-E36D-4783-9E85-E017A2EFC65D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D02F43A-5CAB-458E-AAE2-DC0669F29A03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D02F43A-5CAB-458E-AAE2-DC0669F29A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D02F43A-5CAB-458E-AAE2-DC0669F29A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D02F43A-5CAB-458E-AAE2-DC0669F29A03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

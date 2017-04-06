@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    class Ogr : Card
+   public class Mage : Card
     {
-        public Ogr() : base() 
+        public Mage():base()
         {
-            Attack = 1;
-            AttackDistance = 1;
-            HP = 5;
-            RunSpeed = 1;
-            Height = 20;
+            Attack = 2;
+            AttackDistance = 4;
+            HP = 2;
+            RunSpeed = 2;
+            Height = 10;
             Width = 10;
             RechargeTime = 5;
         }

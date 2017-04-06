@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System;
-
+using CommonElement;
 
 namespace Core
 {
@@ -22,11 +22,11 @@ namespace Core
             FreezedCard = origin.GetCurrentCardClone();
             if (Team == 0)
             {
-                PointPosition = new PointF(0, 0);
+                PointPosition = new PointF(0, -FreezedCard.Height / 2);
             }
             else
             {
-                PointPosition = new PointF((int)FieldLength.Standart, 0);
+                PointPosition = new PointF((int)FieldLength.Standart, -FreezedCard.Height/2);
             }
             Rect = new RectangleF(0, 0, FreezedCard.Width, FreezedCard.Height);
         }
@@ -56,7 +56,7 @@ namespace Core
         }
         public virtual void Draw(Graphics g,int lineHeight)
         {
-            g.DrawRectangle(new Pen(Brushes.Red),new Rectangle((int)(PointPosition.X - Rect.Width / 2),(int)(PointPosition.Y - Rect.Height / 2+ lineHeight), (int)Rect.Width, (int)Rect.Height));
+ 
         }
     }
 }
