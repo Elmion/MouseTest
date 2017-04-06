@@ -6,10 +6,12 @@ namespace Core
 {
     internal class cUnit
     {
+        public cUnit LockedTarget;
         public RectangleF Rect;
         public PointF PrePosition;
         public PointF PointPosition;
         public Card FreezedCard;
+        public bool toRemove;
         public float BaseRunSpeed = 2;
 
         public sbyte Team
@@ -18,6 +20,7 @@ namespace Core
         }
         public cUnit(Card origin, sbyte Team)
         {
+            toRemove = false;
             this.Team = Team;
             FreezedCard = origin.GetCurrentCardClone();
             if (Team == 0)
@@ -38,6 +41,14 @@ namespace Core
                 PointPosition = new PointF(PointPosition.X + FreezedCard.RunSpeed, PointPosition.Y);
             else
                 PointPosition = new PointF(PointPosition.X - FreezedCard.RunSpeed, PointPosition.Y);
+        }
+        public virtual void AttackTarget()
+        {
+            if(LockedTarget != null)
+            {
+                LockedTarget.FreezedCard.HP -= FreezedCard.Attack;
+                if (LockedTarget.FreezedCard.HP <= 0) { LockedTarget.toRemove = true; LockedTarget = null; }
+            }
         }
         public void SetPosition(PointF p)
         {

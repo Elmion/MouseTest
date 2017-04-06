@@ -9,8 +9,7 @@ namespace CommonElement
 {
    public class SceneItemInfo
     {
-        public string Name;
-        public Type typeObject;
+        public string NameCommonObject;
         public int Team;
         public float PositionX;
         public float PositionY;

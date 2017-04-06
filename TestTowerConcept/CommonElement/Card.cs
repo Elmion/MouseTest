@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 
-namespace Core
+namespace CommonElement
 {
     public  class Card
     {
@@ -26,7 +27,14 @@ namespace Core
         }
         public Card GetCurrentCardClone()
         {
-            return  new Card() {Attack = Attack,AttackDistance = AttackDistance, HP = HP, RunSpeed = RunSpeed,Height = Height,Width = Width};
+            Card c =  this.GetType().GetConstructor(new System.Type[]{ }).Invoke(new object[] { }) as Card;
+            c.Attack = Attack;
+            c.AttackDistance = AttackDistance;
+            c.HP = HP;
+            c.RunSpeed = RunSpeed;
+            c.Height = Height;
+            c.Width = Width;
+            return  c;
         }
     }
 }

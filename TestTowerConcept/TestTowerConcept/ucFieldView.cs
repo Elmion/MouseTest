@@ -31,7 +31,18 @@ namespace TestTowerConcept
           List<SceneItemInfo> listDrawElement = Game.GetDrawInfo();
             foreach (SceneItemInfo itemInfo in listDrawElement)
             {
-                g.DrawRectangle(new Pen(Brushes.Red), new Rectangle((int)(itemInfo.PositionX - itemInfo.Bounds.Width / 2), (int)(itemInfo.PositionY - itemInfo.Bounds.Height / 2 + 50), (int)itemInfo.Bounds.Width, (int)itemInfo.Bounds.Height));
+                if(itemInfo.NameCommonObject == "Mage")
+                {
+                    g.DrawRectangle(new Pen(Brushes.Red), new Rectangle((int)(itemInfo.PositionX - itemInfo.Bounds.Width / 2), (int)(itemInfo.PositionY - itemInfo.Bounds.Height / 2 + 50), (int)itemInfo.Bounds.Width, (int)itemInfo.Bounds.Height));
+                }
+                if (itemInfo.NameCommonObject == "Ogr")
+                    {
+                    g.DrawRectangle(new Pen(Brushes.Peru), new Rectangle((int)(itemInfo.PositionX - itemInfo.Bounds.Width / 2), (int)(itemInfo.PositionY - itemInfo.Bounds.Height / 2 + 50), (int)itemInfo.Bounds.Width, (int)itemInfo.Bounds.Height));
+                }
+                if (itemInfo.NameCommonObject == "Portal")
+                {
+                    g.DrawRectangle(new Pen(Brushes.Black), new Rectangle((int)(itemInfo.PositionX - itemInfo.Bounds.Width / 2), (int)(itemInfo.PositionY - itemInfo.Bounds.Height / 2 + 50), (int)itemInfo.Bounds.Width, (int)itemInfo.Bounds.Height));
+                }
             }        
         }
     }

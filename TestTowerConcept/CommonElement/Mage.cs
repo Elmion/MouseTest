@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace CommonElement
 {
    public class Mage : Card
     {
+        public static int IDObject = 1;
         public Mage():base()
         {
             Attack = 2;

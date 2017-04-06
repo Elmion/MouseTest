@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace CommonElement
 {
-   public class Ogr : Card
+   public class Portal : Card
     {
-        public Ogr() : base() 
+        public Portal() : base() 
         {
-            Attack = 1;
-            AttackDistance = 1;
-            HP = 5;
-            RunSpeed = 1;
-            Height = 20;
-            Width = 10;
+            Attack = 0;
+            AttackDistance = 0;
+            HP = 300;
+            RunSpeed = 0;
+            Height = 40;
+            Width = 5;
             RechargeTime = 5;
         }
     }

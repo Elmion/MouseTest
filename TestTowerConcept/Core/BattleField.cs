@@ -23,6 +23,8 @@ namespace Core
             }
             foreach (var unit in Units)
             {
+                List<cUnit> unitsCanAttak = new List<cUnit>();
+                bool notFoundCurrentTarget = true;
                 foreach (var unit2 in Units)
                 {
                     if (unit2.Team != unit.Team && unit != unit2)
@@ -35,19 +37,37 @@ namespace Core
                             var v2 = unit2.BaseRunSpeed;
                             if (unit.Team == 0)
                             {
-                                unit.SetPosition(new PointF(unit.PrePosition.X + (S - deltaS) * v1 / (v1 + v2), unit.PrePosition.Y));
-                                unit2.SetPosition(new PointF(unit2.PrePosition.X - (S - deltaS) * v2 / (v1 + v2), unit2.PrePosition.Y));
+                                // 0.01 Обеспечивает минимальное пересeчение
+                                unit.SetPosition(new PointF(unit.PrePosition.X + (S - deltaS) * v1 / (v1 + v2)+0.01f, unit.PrePosition.Y));
+                                unit2.SetPosition(new PointF(unit2.PrePosition.X - (S - deltaS) * v2 / (v1 + v2)- 0.01f, unit2.PrePosition.Y));
                             }
                             else
                             {
-                                unit.SetPosition(new PointF(unit.PrePosition.X - (S - deltaS) * v1 / (v1 + v2), unit.PrePosition.Y));
-                                unit2.SetPosition(new PointF(unit2.PrePosition.X + (S - deltaS) * v2 / (v1 + v2), unit2.PrePosition.Y));
+                                unit.SetPosition(new PointF(unit.PrePosition.X - (S - deltaS) * v1 / (v1 + v2)- 0.01f, unit.PrePosition.Y));
+                                unit2.SetPosition(new PointF(unit2.PrePosition.X + (S - deltaS) * v2 / (v1 + v2)+ 0.01f, unit2.PrePosition.Y));
                             }
-                        }
+                            // Добавляем до конца списка либо пока не найдём свою цель
+                            if(unit2 == unit.LockedTarget)
+                            {
+                                unit.AttackTarget();
+                                notFoundCurrentTarget = false;
+                            }
+                            else
+                            {
+                                if(notFoundCurrentTarget) unitsCanAttak.Add(unit2);
+                            }                            
+                         }
                     }
 
                 }
+                //Выбираем случайную цель.
+                if(notFoundCurrentTarget && unitsCanAttak.Count>0)
+                {
+                    unit.LockedTarget = unitsCanAttak[GameCore.rnd.Next(unitsCanAttak.Count)];
+                    unit.AttackTarget();
+                }
             }
+            Units.RemoveAll(x => x.toRemove == true);
         }   
         internal void Draw(Graphics g)
         {
