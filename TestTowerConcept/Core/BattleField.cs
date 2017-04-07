@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-
+using CommonElement;
 namespace Core
 {
    public class BattleField
@@ -14,6 +14,10 @@ namespace Core
         public BattleField()
         {
             Units = new List<cUnit>();
+            //Порталы игроков всегда на поле.
+            Units.Add(new cUnit(new Portal(), 0));
+            Units.Add(new cUnit(new Portal(), 1));
+
         }
         public void AllMove()
         {
@@ -75,7 +79,11 @@ namespace Core
             {
                 unit.Draw(g,50);
             }
-        }     
+        }
+        public void CreateCard(int side, Card c)
+        {
+            Units.Add(new cUnit(c, (sbyte)side));
+        }
     }
 }
 public enum FieldLength :int
