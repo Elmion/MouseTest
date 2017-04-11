@@ -27,6 +27,8 @@ namespace Core
        public void Update()
         {
             Battle.AllMove();
+            Player1.Update();
+            Player2.Update();
         }
         
        public List<SceneItemInfo> GetDrawInfo()
@@ -45,6 +47,34 @@ namespace Core
             }
             return outList;
         }
+        public List<PlayerInfo> GetPlayerInfo()
+        {
+            List<PlayerInfo> ListOut = new List<PlayerInfo>();
+            PlayerInfo p1 = new PlayerInfo();
+            PlayerInfo p2 = new PlayerInfo();
+            for (int i = 0; i < Player1.CardInSlot.Count; i++)
+            {
+                p1.CardInSlots.Add(Player1.CardInSlot[i].card);
+                p2.CardInSlots.Add(Player2.CardInSlot[i].card);
+
+                if (Player1.CardInSlot[i].ReloadRequest) p1.CardStatus.Add(-1);
+                else
+                {
+                    p1.CardStatus.Add(Player1.CardInSlot[i].CurrentRechargeTime);
+                }
+
+
+                if (Player2.CardInSlot[i].ReloadRequest) p2.CardStatus.Add(-1);
+                else
+                {
+                    p2.CardStatus.Add(Player2.CardInSlot[i].CurrentRechargeTime);
+                }
+
+            }
+            ListOut.Add(p1);
+            ListOut.Add(p2);
+            return ListOut;
+        }
         public string ExecuteCommand(string  command)
         {
             string[]  splitedCommand = command.Split(' ');
@@ -53,8 +83,9 @@ namespace Core
                 //PutCard Mage 1 - первый вызывает мага
                 case "PutCard":
                     {
-                        Card c =  Type.GetType(splitedCommand[1]).GetConstructor(new System.Type[] { }).Invoke(new object[] { }) as Card;
+                        Card c =  Type.GetType("CommonElement."+splitedCommand[1]+ ",CommonElement").GetConstructor(new System.Type[] { }).Invoke(new object[] { }) as Card;
                         Battle.CreateCard(sbyte.Parse(splitedCommand[2]), c);
+                        Player1.RechargeCard(Player1.CardInSlot.FindIndex(x => x.card.GetType() == c.GetType()));
                         return "true";
                     }
             }

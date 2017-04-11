@@ -35,9 +35,13 @@
             // 
             // pbPic
             // 
+            this.pbPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pbPic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbPic.Enabled = false;
             this.pbPic.Location = new System.Drawing.Point(3, 3);
+            this.pbPic.Margin = new System.Windows.Forms.Padding(0);
             this.pbPic.Name = "pbPic";
-            this.pbPic.Size = new System.Drawing.Size(64, 65);
+            this.pbPic.Size = new System.Drawing.Size(62, 65);
             this.pbPic.TabIndex = 0;
             this.pbPic.TabStop = false;
             // 
@@ -57,8 +61,10 @@
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.lInfo);
             this.Controls.Add(this.pbPic);
+            this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "ucCard";
-            this.Size = new System.Drawing.Size(68, 100);
+            this.Size = new System.Drawing.Size(71, 100);
+            this.Click += new System.EventHandler(this.ucCard_Click);
             ((System.ComponentModel.ISupportInitialize)(this.pbPic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

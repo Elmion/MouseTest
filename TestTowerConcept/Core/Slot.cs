@@ -4,12 +4,10 @@ namespace Core
     internal class Slot
     {
 
-        internal float CurrentRechargeTime;
-        internal float CurrentReloadTime;
+        internal int CurrentRechargeTime;
+        internal int CurrentReloadTime;
         internal bool ReloadRequest;
         public Card card { get; set; }
-
-        }
            
     }
 }

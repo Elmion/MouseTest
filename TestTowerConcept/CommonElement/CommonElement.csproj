@@ -46,6 +46,7 @@
     <Compile Include="IDraw.cs" />
     <Compile Include="Mage.cs" />
     <Compile Include="Ogr.cs" />
+    <Compile Include="PlayerInfo.cs" />
     <Compile Include="Portal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneItemInfo.cs" />

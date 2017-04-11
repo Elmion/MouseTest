@@ -11,7 +11,7 @@ namespace CommonElement
         public virtual int RunSpeed { get; set; }
         public virtual int Height { get; set; }
         public virtual int Width { get; set; }
-        public virtual float RechargeTime { get; set; }
+        public virtual int RechargeTime { get; set; }
 
        // List<SpecialAttebute> BaseSpecial;
        public  Card()
