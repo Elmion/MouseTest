@@ -16,7 +16,7 @@ namespace CommonElement
             RunSpeed = 1;
             Height = 20;
             Width = 10;
-            RechargeTime = 500;
+            RechargeTime = 200;
         }
     }
 }

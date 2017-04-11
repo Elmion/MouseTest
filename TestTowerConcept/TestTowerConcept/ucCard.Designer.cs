@@ -65,6 +65,7 @@
             this.Name = "ucCard";
             this.Size = new System.Drawing.Size(71, 100);
             this.Click += new System.EventHandler(this.ucCard_Click);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ucCard_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.pbPic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

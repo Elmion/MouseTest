@@ -55,7 +55,7 @@ namespace Core
                     int rndCard = GameCore.rnd.Next(Cardbook.Count);
                     slot.card = Cardbook[rndCard];
                     Cardbook.RemoveAt(rndCard);
-                    slot.CurrentReloadTime = 10;//10 секунд
+                    slot.CurrentReloadTime = 100;//10 секунд
                     slot.ReloadRequest = false;
                 }
             }

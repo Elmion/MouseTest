@@ -77,15 +77,27 @@ namespace Core
         }
         public string ExecuteCommand(string  command)
         {
-            string[]  splitedCommand = command.Split(' ');
+            string[] splitedCommand = command.Split(' ');
             switch(splitedCommand[0])
             {
                 //PutCard Mage 1 - первый вызывает мага
                 case "PutCard":
                     {
-                        Card c =  Type.GetType("CommonElement."+splitedCommand[1]+ ",CommonElement").GetConstructor(new System.Type[] { }).Invoke(new object[] { }) as Card;
-                        Battle.CreateCard(sbyte.Parse(splitedCommand[2]), c);
-                        Player1.RechargeCard(Player1.CardInSlot.FindIndex(x => x.card.GetType() == c.GetType()));
+                        Type typeSummonCard = Type.GetType("CommonElement." + splitedCommand[1] + ",CommonElement");
+                        Slot slot = Player1.CardInSlot.Find(x => x.card.GetType() == typeSummonCard);
+                        if (slot.card != null && slot.CurrentRechargeTime == 0)//присылаем по сети так что на случай подлога, вообще такого не должно быть
+                        {
+                            Card c = typeSummonCard.GetConstructor(new System.Type[] { }).Invoke(new object[] { }) as Card;
+                            Battle.CreateCard(sbyte.Parse(splitedCommand[2]), c);
+                            Player1.RechargeCard(Player1.CardInSlot.FindIndex(x => x.card.GetType() == typeSummonCard));
+                            return "true";
+                        }
+                        return "false";
+                    }
+                //PutCard 1 1
+                case "ReloadCard":
+                    {
+                        Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
                         return "true";
                     }
             }

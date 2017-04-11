@@ -20,6 +20,7 @@ namespace TestTowerConcept
         GameCore core;
         public int User = 0; // ставим польтеля 0 если первый и 1 если второй
         public Action<ucCard> PutCard;
+        public Action<ucCard> ReloadCard;
         public Form1()
         {
             InitializeComponent();
@@ -36,11 +37,17 @@ namespace TestTowerConcept
                 PlayerCardsInSlot.Add(new ucCard());
                 PlayerCardsInSlot[i].Parent = this;
                 PlayerCardsInSlot[i].Location = new Point(20+i * 95, 160);
-                PlayerCardsInSlot[i].InReload = false;
                 PlayerCardsInSlot[i].card = pInfo[User].CardInSlots[i];
                 PlayerCardsInSlot[i].Recharge = pInfo[User].CardStatus[i];
             }
             PutCard += CommandPutCard;
+            ReloadCard += CommandRelodCard;
+        }
+
+        private void CommandRelodCard(ucCard obj)
+        {
+          int index =  PlayerCardsInSlot.FindIndex( x => x == obj);
+            core.ExecuteCommand("ReloadCard " + index + " 1");
         }
 
         private void CommandPutCard(ucCard obj)

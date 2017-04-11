@@ -44,11 +44,21 @@ namespace Core.Tests
         }
 
         [TestMethod()]
-        public void ExecuteCommandTest()
+        public void ExecuteCommandPutCardTest()
         {
             GameCore core = new GameCore();
+            string cardNameInHand = core.GetPlayerInfo()[0].CardInSlots[0].GetType().ToString().Split('.').Last();
+            Assert.AreEqual(core.ExecuteCommand("PutCard "+ cardNameInHand + " 1"),"true");
             core.Update();
-            Assert.AreEqual(core.ExecuteCommand("PutCard Mage 1"),"true");
+            cardNameInHand = core.GetPlayerInfo()[0].CardInSlots[0].GetType().ToString().Split('.').Last();
+            Assert.AreEqual(core.ExecuteCommand("PutCard " + cardNameInHand + " 1"), "false");
+
+        }
+        [TestMethod()]
+        public void ExecuteCommandFailTest()
+        {
+            GameCore core = new GameCore();
+            Assert.AreEqual(core.ExecuteCommand("sadasdawdadsa"), "null");
         }
     }
 }

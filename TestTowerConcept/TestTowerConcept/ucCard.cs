@@ -14,7 +14,7 @@ namespace TestTowerConcept
     {
         public Card card;
         public int Recharge;
-        public bool InReload;
+
         public ucCard()
         {
             InitializeComponent();
@@ -35,13 +35,28 @@ namespace TestTowerConcept
             //если речардж есть
             if (Recharge > 0) lInfo.Text = Recharge.ToString();
             if (Recharge == 0) lInfo.Text = "Заряжено";
-            if (InReload) lInfo.Text = "Перегрузка";
+            if (Recharge < 0) lInfo.Text = "Перегрузка";
         }
 
         private void ucCard_Click(object sender, EventArgs e)
         {
-            Form1 f = this.Parent as Form1;
-            f.PutCard(this);
+            
+
+        }
+
+        private void ucCard_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (Recharge < 0) return;                   
+                Form1 f = this.Parent as Form1;
+                f.PutCard(this);
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                Form1 f = this.Parent as Form1;
+                f.ReloadCard(this);
+            }
         }
     }
 }
