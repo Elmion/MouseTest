@@ -24,7 +24,14 @@ namespace TestTowerConcept
             if (card == null) pbPic.BackgroundImage = null;
             if (card is Mage) pbPic.BackgroundImage = Properties.Resources.Mage;
             if (card is Ogr) pbPic.BackgroundImage = Properties.Resources.Sleep_Troll;
-
+            if (card is OloloSolder) pbPic.BackgroundImage = Properties.Resources.japonka;
+            if (card is Knight) pbPic.BackgroundImage = Properties.Resources.Iojik;
+            if (card is Bee) pbPic.BackgroundImage = Properties.Resources.Bee;
+            if (card is RedCat) pbPic.BackgroundImage = Properties.Resources.Fox;
+            if (card is WildDimon) pbPic.BackgroundImage = Properties.Resources.Rainbow_Hand;
+            if (card is Orc) pbPic.BackgroundImage = Properties.Resources.Run_Boy;
+            if (card is Kamicadze) pbPic.BackgroundImage = Properties.Resources.Lenin;
+            if (card is Academic) pbPic.BackgroundImage = Properties.Resources.Smile;
             //если речардж есть
             if (Recharge > 0) lInfo.Text = Recharge.ToString();
             if (Recharge == 0) lInfo.Text = "Заряжено";

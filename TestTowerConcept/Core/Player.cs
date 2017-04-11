@@ -20,14 +20,14 @@ namespace Core
             Cardbook = new List<Card>();
             Cardbook.Add(new Mage());
             Cardbook.Add(new Ogr());
-            Cardbook.Add(new Mage());
-            Cardbook.Add(new Mage());
-            Cardbook.Add(new Ogr());
-            Cardbook.Add(new Mage());
-            Cardbook.Add(new Mage());
-            Cardbook.Add(new Ogr());
-            Cardbook.Add(new Ogr());
-            Cardbook.Add(new Ogr());
+            Cardbook.Add(new OloloSolder());
+            Cardbook.Add(new Knight());
+            Cardbook.Add(new Bee());
+            Cardbook.Add(new RedCat());
+            Cardbook.Add(new WildDimon());
+            Cardbook.Add(new Orc());
+            Cardbook.Add(new Kamicadze());
+            Cardbook.Add(new Academic());
 
             CardInSlot = new List<Slot>();
             this.core = core;
