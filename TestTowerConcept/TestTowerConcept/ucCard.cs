@@ -14,10 +14,15 @@ namespace TestTowerConcept
     {
         public Card card;
         public int Recharge;
+        public int Cristall;
 
         public ucCard()
         {
             InitializeComponent();
+            pbPic.MouseClick += ucCard_MouseClick;
+            pbPic.DragDrop += ucCard_DragDrop;
+            lInfo.MouseClick += ucCard_MouseClick;
+            Cristall = 0;
         }
         public new void Update()
         {
@@ -43,7 +48,6 @@ namespace TestTowerConcept
             
 
         }
-
         private void ucCard_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -57,6 +61,19 @@ namespace TestTowerConcept
                 Form1 f = this.Parent as Form1;
                 f.ReloadCard(this);
             }
+        }
+        public void ucCard_DragDrop(object sender, DragEventArgs e)
+        {
+            ucCristalCollector c =  e.Data.GetData(typeof(ucCristalCollector)) as ucCristalCollector;
+            c.CristalCount--;
+            Cristall++;
+            Form1 f = this.Parent as Form1;
+            f.AddCristall(this);
+
+        }
+        private void ucCard_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
         }
     }
 }

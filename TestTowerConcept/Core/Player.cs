@@ -10,10 +10,12 @@ namespace Core
     class Player
     {
         private const int COUNT_SLOTS = 5;
+
         int Team { get; set; }
         GameCore core;
         List<Card> Cardbook;
         public List<Slot> CardInSlot;
+        public cCristall Cristal { get; }
         public Player(int Team,GameCore core)
         {
             this.Team = Team;
@@ -36,7 +38,8 @@ namespace Core
                 CardInSlot.Add(new Slot());
                 GetCardToSlot(i);
             }
-            
+            Cristal = new cCristall(); ; // Выдаём один кристалл
+
         }
         public void GetCardToSlot(int slot)
         {
@@ -50,15 +53,15 @@ namespace Core
             {
                 if (slot.CurrentRechargeTime > 0) slot.CurrentRechargeTime--;
                 if (slot.ReloadRequest) slot.CurrentReloadTime--;
-                if(slot.CurrentReloadTime <=0)
+                if(slot.ReloadRequest && slot.CurrentReloadTime ==0)
                 {
                     int rndCard = GameCore.rnd.Next(Cardbook.Count);
                     slot.card = Cardbook[rndCard];
                     Cardbook.RemoveAt(rndCard);
-                    slot.CurrentReloadTime = 100;//10 секунд
                     slot.ReloadRequest = false;
                 }
             }
+            Cristal.Update();
         }
         public void RechargeCard(int numSlot)
         {
@@ -75,8 +78,11 @@ namespace Core
                 if (CardInSlot[i].CurrentRechargeTime > 0) continue;
                 Cardbook.Add(CardInSlot[numSlots[i]].card);
                 CardInSlot[numSlots[i]].card = null;
+                CardInSlot[numSlots[i]].CurrentReloadTime = 100;//10 секунд
                 CardInSlot[numSlots[i]].ReloadRequest= true;
             }
         }
+
+
     }
 }

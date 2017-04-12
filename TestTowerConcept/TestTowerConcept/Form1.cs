@@ -21,6 +21,10 @@ namespace TestTowerConcept
         public int User = 0; // ставим польтеля 0 если первый и 1 если второй
         public Action<ucCard> PutCard;
         public Action<ucCard> ReloadCard;
+        public Action<ucCard> AddCristall;
+        public Action<ucCard> RemoveCristall;
+        public Action ReplaceCristall;
+
         public Form1()
         {
             InitializeComponent();
@@ -42,24 +46,46 @@ namespace TestTowerConcept
             }
             PutCard += CommandPutCard;
             ReloadCard += CommandRelodCard;
-        }
+            AddCristall += CommandAddCristall;
+            RemoveCristall += CommandRemoveCristall;
+            ReplaceCristall += CommandReplaceCristall;
+    }
 
+        private void CommandAddCristall(ucCard obj)
+        {
+            int index = PlayerCardsInSlot.FindIndex(x => x == obj);
+            string result = core.ExecuteCommand("AddCristall " + index + " 1");
+            if (result == "false")//откатываем
+            {
+                ucCristalCollector1.CristalCount++;
+                obj.Cristall--;
+            }
+
+        }
+        private void CommandRemoveCristall(ucCard obj)
+        {
+            int index = PlayerCardsInSlot.FindIndex(x => x == obj);
+            core.ExecuteCommand("AddCristall " + index + " 1");
+        }
+        private void CommandReplaceCristall()
+        {
+
+        }
         private void CommandRelodCard(ucCard obj)
         {
           int index =  PlayerCardsInSlot.FindIndex( x => x == obj);
             core.ExecuteCommand("ReloadCard " + index + " 1");
         }
-
         private void CommandPutCard(ucCard obj)
         {
             string CardName = obj.card.GetType().ToString().Split('.').Last<string>();
             core.ExecuteCommand("PutCard " + CardName + " " + User);
         }
-
         private void T_Tick(object sender, EventArgs e)
         {
             core.Update();
             List<PlayerInfo> pInfo = core.GetPlayerInfo();
+            ucCristalCollector1.CristalCount = pInfo[User].Cristall;
             for (int i = 0; i < pInfo[User].CardInSlots.Count; i++)
             {
                 PlayerCardsInSlot[i].card = pInfo[User].CardInSlots[i];
@@ -67,6 +93,7 @@ namespace TestTowerConcept
             }
             foreach (ucCard cardView in PlayerCardsInSlot) cardView.Update();
             ucFieldView1.Invalidate();
+            ucCristalCollector1.Update();
         }
     }
 }

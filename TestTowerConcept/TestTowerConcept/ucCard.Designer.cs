@@ -56,6 +56,7 @@
             // 
             // ucCard
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -65,6 +66,8 @@
             this.Name = "ucCard";
             this.Size = new System.Drawing.Size(71, 100);
             this.Click += new System.EventHandler(this.ucCard_Click);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ucCard_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ucCard_DragEnter);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ucCard_MouseClick);
             ((System.ComponentModel.ISupportInitialize)(this.pbPic)).EndInit();
             this.ResumeLayout(false);

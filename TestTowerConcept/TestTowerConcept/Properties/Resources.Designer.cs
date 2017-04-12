@@ -93,6 +93,16 @@ namespace TestTowerConcept.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Cristal {
+            get {
+                object obj = ResourceManager.GetObject("Cristal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Flower {
             get {
                 object obj = ResourceManager.GetObject("Flower", resourceCulture);

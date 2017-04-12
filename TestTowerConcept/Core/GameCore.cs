@@ -52,6 +52,8 @@ namespace Core
             List<PlayerInfo> ListOut = new List<PlayerInfo>();
             PlayerInfo p1 = new PlayerInfo();
             PlayerInfo p2 = new PlayerInfo();
+            p1.Cristall = Player1.Cristal.Count;
+            p2.Cristall = Player2.Cristal.Count;
             for (int i = 0; i < Player1.CardInSlot.Count; i++)
             {
                 p1.CardInSlots.Add(Player1.CardInSlot[i].card);
@@ -84,18 +86,35 @@ namespace Core
                 case "PutCard":
                     {
                         Type typeSummonCard = Type.GetType("CommonElement." + splitedCommand[1] + ",CommonElement");
-                        Slot slot = Player1.CardInSlot.Find(x => x.card.GetType() == typeSummonCard);
+                        Slot slot = Player1.CardInSlot.Find(x => x.card != null&&x.card.GetType() == typeSummonCard);
                         if (slot.card != null && slot.CurrentRechargeTime == 0)//присылаем по сети так что на случай подлога, вообще такого не должно быть
                         {
                             Card c = typeSummonCard.GetConstructor(new System.Type[] { }).Invoke(new object[] { }) as Card;
                             Battle.CreateCard(sbyte.Parse(splitedCommand[2]), c);
-                            Player1.RechargeCard(Player1.CardInSlot.FindIndex(x => x.card.GetType() == typeSummonCard));
+                            Player1.RechargeCard(Player1.CardInSlot.FindIndex(x => x.card != null && x.card.GetType() == typeSummonCard));
                             return "true";
                         }
                         return "false";
                     }
-                //PutCard 1 1
+                //Перегружаем карту 1 1
                 case "ReloadCard":
+                    {
+                        Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
+                        return "true";
+                    }
+                //PutCard 1 1- добавить кристал на с 1Й слот player 1 
+                case "AddCristall":
+                    {
+                        return Player1.Cristal.RemoveCristall().ToString();
+                    }
+                //RemoveCristall 1 1 - с удалить кристал в кучу с 1го слота player 1 
+                case "RemoveCristall":
+                    {
+                        Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
+                        return "true";
+                    }
+                //ReplaceCristall 1 2 1 - переместить кристал со слота 1 на слот 2 Player 1
+                case "ReplaceCristall":
                     {
                         Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
                         return "true";

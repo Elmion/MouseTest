@@ -29,21 +29,32 @@
         private void InitializeComponent()
         {
             this.ucFieldView1 = new TestTowerConcept.ucFieldView();
+            this.ucCristalCollector1 = new TestTowerConcept.ucCristalCollector();
             this.SuspendLayout();
             // 
             // ucFieldView1
             // 
+            this.ucFieldView1.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.ucFieldView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ucFieldView1.Location = new System.Drawing.Point(12, 46);
             this.ucFieldView1.Name = "ucFieldView1";
             this.ucFieldView1.Size = new System.Drawing.Size(456, 103);
             this.ucFieldView1.TabIndex = 0;
             // 
+            // ucCristalCollector1
+            // 
+            this.ucCristalCollector1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ucCristalCollector1.Location = new System.Drawing.Point(13, 4);
+            this.ucCristalCollector1.Name = "ucCristalCollector1";
+            this.ucCristalCollector1.Size = new System.Drawing.Size(86, 40);
+            this.ucCristalCollector1.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 275);
+            this.Controls.Add(this.ucCristalCollector1);
             this.Controls.Add(this.ucFieldView1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -54,6 +65,7 @@
         #endregion
 
         private ucFieldView ucFieldView1;
+        private ucCristalCollector ucCristalCollector1;
     }
 }
 

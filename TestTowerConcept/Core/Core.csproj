@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BattleField.cs" />
+    <Compile Include="cCristall.cs" />
     <Compile Include="cUnit.cs" />
     <Compile Include="GameCore.cs" />
     <Compile Include="Player.cs" />

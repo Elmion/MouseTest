@@ -63,6 +63,12 @@
     <Compile Include="ucCard.Designer.cs">
       <DependentUpon>ucCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="ucCristalCollector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ucCristalCollector.Designer.cs">
+      <DependentUpon>ucCristalCollector.cs</DependentUpon>
+    </Compile>
     <Compile Include="ucFieldView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -84,6 +90,9 @@
     </Compile>
     <EmbeddedResource Include="ucCard.resx">
       <DependentUpon>ucCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ucCristalCollector.resx">
+      <DependentUpon>ucCristalCollector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ucFieldView.resx">
       <DependentUpon>ucFieldView.cs</DependentUpon>
@@ -153,6 +162,9 @@
       <Project>{bad917be-e36d-4783-9e85-e017a2efc65d}</Project>
       <Name>Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cristal.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
