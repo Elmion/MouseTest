@@ -102,22 +102,33 @@ namespace Core
                         Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
                         return "true";
                     }
-                //PutCard 1 1- добавить кристал на с 1Й слот player 1 
+                //PutCard 1 1- добавить кристал на  1Й слот player 1 
                 case "AddCristall":
                     {
-                        return Player1.Cristal.RemoveCristall().ToString();
+
+                        Player1.CardInSlot[int.Parse(splitedCommand[1])].Cristall++;
+                        return Player1.Cristal.RemoveCristall().ToString().ToLower();
                     }
                 //RemoveCristall 1 1 - с удалить кристал в кучу с 1го слота player 1 
                 case "RemoveCristall":
                     {
-                        Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
-                        return "true";
+                        if (Player1.CardInSlot[int.Parse(splitedCommand[1])].CristallRemove())
+                        {
+                            Player1.Cristal.AddCristal();
+                            return "true";
+                        }
+                        return "false";
                     }
                 //ReplaceCristall 1 2 1 - переместить кристал со слота 1 на слот 2 Player 1
                 case "ReplaceCristall":
                     {
-                        Player1.ChangeCardsInSlot(int.Parse(splitedCommand[1]));
-                        return "true";
+
+                        if (Player1.CardInSlot[int.Parse(splitedCommand[1])].CristallRemove())
+                        {
+                            Player1.CardInSlot[int.Parse(splitedCommand[2])].Cristall++;
+                            return "true"; 
+                        }
+                        return "false";
                     }
             }
             return "null";

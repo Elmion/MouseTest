@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{42A6CFB2-2278-42D4-A986-56A485C13150}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TestTowerConcept</RootNamespace>
     <AssemblyName>TestTowerConcept</AssemblyName>
@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CristallRecycle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CristallRecycle.Designer.cs">
+      <DependentUpon>CristallRecycle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +84,9 @@
     <Compile Include="ucFieldView.Designer.cs">
       <DependentUpon>ucFieldView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CristallRecycle.resx">
+      <DependentUpon>CristallRecycle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,6 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Cristal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Recycle.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

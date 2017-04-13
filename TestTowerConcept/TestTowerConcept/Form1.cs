@@ -23,7 +23,7 @@ namespace TestTowerConcept
         public Action<ucCard> ReloadCard;
         public Action<ucCard> AddCristall;
         public Action<ucCard> RemoveCristall;
-        public Action ReplaceCristall;
+        public Action<ucCard,ucCard> ReplaceCristall;
 
         public Form1()
         {
@@ -60,15 +60,27 @@ namespace TestTowerConcept
                 ucCristalCollector1.CristalCount++;
                 obj.Cristall--;
             }
-
         }
         private void CommandRemoveCristall(ucCard obj)
         {
             int index = PlayerCardsInSlot.FindIndex(x => x == obj);
-            core.ExecuteCommand("AddCristall " + index + " 1");
+            string result = core.ExecuteCommand("RemoveCristall " + index + " 1");
+            if (result == "false")//откатываем
+            {
+
+                obj.Cristall++;
+            }
         }
-        private void CommandReplaceCristall()
+        private void CommandReplaceCristall(ucCard source,ucCard reciver)
         {
+            int index1 = PlayerCardsInSlot.FindIndex(x => x == source);
+            int index2 = PlayerCardsInSlot.FindIndex(x => x == reciver);
+            string result = core.ExecuteCommand("ReplaceCristall " + index1 +" " + index2 + " 1");
+            if (result == "false")//откатываем
+            {
+                source.Cristall++;
+                reciver.Cristall--;
+            }
 
         }
         private void CommandRelodCard(ucCard obj)

@@ -16,8 +16,8 @@ namespace TestTowerConcept
         public ucCristalCollector()
         {
             InitializeComponent();
-            pictureBox1.MouseDown += lCriCount_MouseDown;
-            lCriCount.MouseDown += lCriCount_MouseDown;
+           pictureBox1.MouseDown += lCriCount_MouseDown;
+           // lCriCount.MouseDown += lCriCount_MouseDown;
         }
         public void Update()
         {
@@ -27,7 +27,5 @@ namespace TestTowerConcept
         {
             this.DoDragDrop( this , DragDropEffects.Copy);
         }
-        
-
     }
 }
