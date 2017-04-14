@@ -8,10 +8,11 @@ namespace Core
 {
     public class cCristall
     {
-        private const int CRISTAL_RESPAWN = 100;
+        private const int CRISTAL_RESPAWN = 96;
         private int RechargeTime = CRISTAL_RESPAWN;
         private int _count;
         public int Count { get { return _count; } }
+        private int AllCristal = 1;
 
         public cCristall()
         {
@@ -19,11 +20,14 @@ namespace Core
         }
         public void Update()
         {
+            if (AllCristal == 9) return;//больше не нужно адейтов
             RechargeTime--;
             if (RechargeTime == 0)
             {
-                RechargeTime = CRISTAL_RESPAWN;
+                AllCristal++;
                 _count++;
+                Console.WriteLine(DateTime.Now.ToLongTimeString() + " " + AllCristal.ToString());
+                RechargeTime = (int)(CRISTAL_RESPAWN * Math.Pow(2, AllCristal - 1)); 
             }
         }
         public void AddCristal()

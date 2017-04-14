@@ -64,8 +64,6 @@ namespace Core
                 {
                     p1.CardStatus.Add(Player1.CardInSlot[i].CurrentRechargeTime);
                 }
-
-
                 if (Player2.CardInSlot[i].ReloadRequest) p2.CardStatus.Add(-1);
                 else
                 {

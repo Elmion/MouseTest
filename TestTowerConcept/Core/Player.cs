@@ -75,7 +75,7 @@ namespace Core
         {
             for (int i = 0; i < numSlots.Length; i++)
             {
-                if (CardInSlot[i].CurrentRechargeTime > 0) continue;
+                if (CardInSlot[numSlots[i]].CurrentRechargeTime > 0) continue;
                 Cardbook.Add(CardInSlot[numSlots[i]].card);
                 CardInSlot[numSlots[i]].card = null;
                 CardInSlot[numSlots[i]].CurrentReloadTime = 100;//10 секунд
