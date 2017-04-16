@@ -13,29 +13,29 @@ namespace Core
 
         int Team { get; set; }
         GameCore core;
-        List<Card> Cardbook;
+        List<Type> Cardbook;
         public List<Slot> CardInSlot;
         public cCristall Cristal { get; }
-        public Player(int Team,GameCore core)
+        public Player(int Team, GameCore core)
         {
             this.Team = Team;
-            Cardbook = new List<Card>();
-            Cardbook.Add(new Mage());
-            Cardbook.Add(new Ogr());
-            Cardbook.Add(new OloloSolder());
-            Cardbook.Add(new Knight());
-            Cardbook.Add(new Bee());
-            Cardbook.Add(new RedCat());
-            Cardbook.Add(new WildDimon());
-            Cardbook.Add(new Orc());
-            Cardbook.Add(new Kamicadze());
-            Cardbook.Add(new Academic());
+            Cardbook = new List<Type>();
+            Cardbook.Add(typeof(Mage));
+            Cardbook.Add(typeof(Ogr));
+            Cardbook.Add(typeof(OloloSolder));
+            Cardbook.Add(typeof(Knight));
+            Cardbook.Add(typeof(Bee));
+            Cardbook.Add(typeof(RedCat));
+            Cardbook.Add(typeof(WildDimon));
+            Cardbook.Add(typeof(Orc));
+            Cardbook.Add(typeof(Kamicadze));
+            Cardbook.Add(typeof(Academic));
 
             CardInSlot = new List<Slot>();
             this.core = core;
             for (int i = 0; i < 5; i++)
             {
-                CardInSlot.Add(new Slot());
+                CardInSlot.Add(new Slot(this));
                 GetCardToSlot(i);
             }
             Cristal = new cCristall(); ; // Выдаём один кристалл
@@ -63,11 +63,7 @@ namespace Core
             }
             Cristal.Update();
         }
-        public void RechargeCard(int numSlot)
-        {
-            CardInSlot[numSlot].CurrentRechargeTime = CardInSlot[numSlot].card.RechargeTime;
-        }
-        public void AddCardIntoBook(Card c)
+        public void AddCardIntoBook(Type c)
         {
             Cardbook.Add(c);
         }
