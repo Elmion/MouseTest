@@ -9,10 +9,19 @@ namespace Core
         internal int CurrentReloadTime;
         internal bool ReloadRequest;
         internal int Cristall { get; set; }
-        public Type card { get; set; }
+        public string CardName
+        {
+            get { return _cardName; }
+            set
+            {
+                if (value == string.Empty) cacheCardInSlot = null;
+                _cardName = value;
+            }
+        }
 
+        private string _cardName = "";
+        private Card cacheCardInSlot;
 
-        private Player parent;
         public Slot(Player p)
         {
             Cristall = 0;
@@ -23,19 +32,18 @@ namespace Core
             Cristall--;
             return true;
         }
-        public bool SummonCard()
+        public Card SummonCard()
         {
             if(CurrentRechargeTime == 0 && CurrentReloadTime == 0)
             {
-                Card c = card.GetConstructor(new System.Type[] { }).Invoke(new object[] { }) as Card;
-                Battle.CreateCard(sbyte.Parse(splitedCommand[2]), c);
-                Player1.RechargeCard(Player1.CardInSlot.FindIndex(x => x.card != null && x.card.GetType() == typeSummonCard));
+                cacheCardInSlot = CardsBase.Instance.GetClone(_cardName);
+                return cacheCardInSlot;
             }
-            return "true";
+            return null;
         }
-        public void RechargeCard(int numSlot)
+        public void RechargeCard()
         {
-            CardInSlot[numSlot].CurrentRechargeTime = CardInSlot[numSlot].card.RechargeTime;
+            CurrentRechargeTime = cacheCardInSlot.RechargeTime;
         }
     }
 }

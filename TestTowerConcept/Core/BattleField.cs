@@ -15,9 +15,8 @@ namespace Core
         {
             Units = new List<cUnit>();
             //Порталы игроков всегда на поле.
-            Units.Add(new cUnit(new Portal(), 0));
-            Units.Add(new cUnit(new Portal(), 1));
-
+            Units.Add(new cUnit(CardsBase.Instance.GetClone("Portal"), 0));
+            Units.Add(new cUnit(CardsBase.Instance.GetClone("Portal"), 1));
         }
         public void AllMove()
         {
@@ -80,9 +79,10 @@ namespace Core
                 unit.Draw(g,50);
             }
         }
-        public void CreateCard(int side, Card c)
+        public bool CreateCard(int side, Card c)
         {
             Units.Add(new cUnit(c, (sbyte)side));
+            return true;//удачно добавили
         }
     }
 }

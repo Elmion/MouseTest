@@ -18,11 +18,11 @@ namespace Core
         {
             get; set;
         }
-        public cUnit(Card origin, sbyte Team)
+        public cUnit(Card card, sbyte Team)
         {
             toRemove = false;
             this.Team = Team;
-            FreezedCard = origin.GetCurrentCardClone();
+            FreezedCard = card;
             if (Team == 0)
             {
                 PointPosition = new PointF(0, -FreezedCard.Height / 2);

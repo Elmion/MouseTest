@@ -12,7 +12,7 @@ namespace TestTowerConcept
 {
     public partial class ucCard : UserControl
     {
-        public Card card;
+        public string card;
         public int Recharge;
         public int Cristall;
 
@@ -32,16 +32,16 @@ namespace TestTowerConcept
         public new void Update()
         {
             if (card == null) pbPic.BackgroundImage = null;
-            if (card is Mage) pbPic.BackgroundImage = Properties.Resources.Mage;
-            if (card is Ogr) pbPic.BackgroundImage = Properties.Resources.Sleep_Troll;
-            if (card is OloloSolder) pbPic.BackgroundImage = Properties.Resources.japonka;
-            if (card is Knight) pbPic.BackgroundImage = Properties.Resources.Iojik;
-            if (card is Bee) pbPic.BackgroundImage = Properties.Resources.Bee;
-            if (card is RedCat) pbPic.BackgroundImage = Properties.Resources.Fox;
-            if (card is WildDimon) pbPic.BackgroundImage = Properties.Resources.Rainbow_Hand;
-            if (card is Orc) pbPic.BackgroundImage = Properties.Resources.Run_Boy;
-            if (card is Kamicadze) pbPic.BackgroundImage = Properties.Resources.Lenin;
-            if (card is Academic) pbPic.BackgroundImage = Properties.Resources.Smile;
+            if (card == "Mage") pbPic.BackgroundImage = Properties.Resources.Mage;
+            if (card == "Ogr") pbPic.BackgroundImage = Properties.Resources.Sleep_Troll;
+            if (card == "OloloSolder") pbPic.BackgroundImage = Properties.Resources.japonka;
+            if (card == "Knight") pbPic.BackgroundImage = Properties.Resources.Iojik;
+            if (card == "Bee") pbPic.BackgroundImage = Properties.Resources.Bee;
+            if (card == "RedCat") pbPic.BackgroundImage = Properties.Resources.Fox;
+            if (card == "WildDimon") pbPic.BackgroundImage = Properties.Resources.Rainbow_Hand;
+            if (card == "Orc") pbPic.BackgroundImage = Properties.Resources.Run_Boy;
+            if (card == "Kamicadze") pbPic.BackgroundImage = Properties.Resources.Lenin;
+            if (card == "Academic") pbPic.BackgroundImage = Properties.Resources.Smile;
             //если речардж есть
             if (Recharge > 0) lInfo.Text = Recharge.ToString();
             if (Recharge == 0) lInfo.Text = "Заряжено";

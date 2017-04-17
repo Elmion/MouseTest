@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,22 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Academic.cs" />
-    <Compile Include="Bee.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardsBase.cs" />
     <Compile Include="IDraw.cs" />
-    <Compile Include="Kamicadze.cs" />
-    <Compile Include="Knight.cs" />
-    <Compile Include="Mage.cs" />
-    <Compile Include="Ogr.cs" />
-    <Compile Include="OloloSolder.cs" />
-    <Compile Include="Orc.cs" />
     <Compile Include="PlayerInfo.cs" />
-    <Compile Include="Portal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedCat.cs" />
     <Compile Include="SceneItemInfo.cs" />
-    <Compile Include="WildDimon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cards.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

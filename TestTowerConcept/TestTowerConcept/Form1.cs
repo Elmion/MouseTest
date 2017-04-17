@@ -90,8 +90,8 @@ namespace TestTowerConcept
         }
         private void CommandPutCard(ucCard obj)
         {
-            string CardName = obj.card.GetType().ToString().Split('.').Last<string>();
-            core.ExecuteCommand("PutCard " + CardName + " " + User);
+            int SlotIndex = PlayerCardsInSlot.IndexOf(obj);
+            core.ExecuteCommand("PutCard " + SlotIndex + " " + User);
         }
         private void T_Tick(object sender, EventArgs e)
         {
@@ -100,7 +100,7 @@ namespace TestTowerConcept
             ucCristalCollector1.CristalCount = pInfo[User].Cristall;
             for (int i = 0; i < pInfo[User].CardInSlots.Count; i++)
             {
-                PlayerCardsInSlot[i].card = pInfo[User].CardInSlots[i];
+                PlayerCardsInSlot[i].card =  pInfo[User].CardInSlots[i];
                 PlayerCardsInSlot[i].Recharge = pInfo[User].CardStatus[i];
             }
             foreach (ucCard cardView in PlayerCardsInSlot) cardView.Update();

@@ -5,6 +5,8 @@ namespace CommonElement
 {
     public  class Card
     {
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
         public virtual int Attack { get; set; }
         public virtual int AttackDistance { get; set; }
         public virtual int HP { get; set; }
@@ -25,6 +27,7 @@ namespace CommonElement
         {
 
         }
+        
         public Card GetCurrentCardClone()
         {
             Card c =  this.GetType().GetConstructor(new System.Type[]{ }).Invoke(new object[] { }) as Card;

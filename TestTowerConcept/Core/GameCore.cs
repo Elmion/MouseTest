@@ -11,18 +11,16 @@ namespace Core
     public class GameCore
     {
         public static readonly Random rnd = new Random();
-        BattleField Battle;
-        Player Player1;
-        Player Player2;
+        internal BattleField Battle;
+        internal Player Player1;
+        internal Player Player2;
         public GameCore()
         {
+            CardsBase.Instance.LoadCards();
             Player1 = new Player(0,this);
             Player2 = new Player(1,this);
             Battle = new BattleField();
-            Battle.Units.Add(new cUnit(new Mage(), 0));
-            Battle.Units.Add(new cUnit(new Ogr(),  0));
-            Battle.Units.Add(new cUnit(new Ogr(),  1));
-            Battle.Units.Add(new cUnit(new Mage(), 1));
+
         }
        public void Update()
         {
@@ -37,8 +35,7 @@ namespace Core
             foreach (cUnit item in Battle.Units)
             {
                 SceneItemInfo s = new SceneItemInfo();
-                string[] separateType = item.FreezedCard.GetType().ToString().Split('.');
-                s.NameCommonObject = separateType[separateType.Length-1];
+                s.NameCommonObject = item.FreezedCard.Name;
                 s.Team = item.Team;
                 s.PositionX = item.PointPosition.X;
                 s.PositionY = item.PointPosition.Y;
@@ -54,20 +51,20 @@ namespace Core
             PlayerInfo p2 = new PlayerInfo();
             p1.Cristall = Player1.Cristal.Count;
             p2.Cristall = Player2.Cristal.Count;
-            for (int i = 0; i < Player1.CardInSlot.Count; i++)
+            for (int i = 0; i < Player1.Slots.Count; i++)
             {
-                p1.CardInSlots.Add(Player1.CardInSlot[i].card);
-                p2.CardInSlots.Add(Player2.CardInSlot[i].card);
+                p1.CardInSlots.Add(Player1.Slots[i].CardName);
+                p2.CardInSlots.Add(Player2.Slots[i].CardName);
 
-                if (Player1.CardInSlot[i].ReloadRequest) p1.CardStatus.Add(-1);
+                if (Player1.Slots[i].ReloadRequest) p1.CardStatus.Add(-1);
                 else
                 {
-                    p1.CardStatus.Add(Player1.CardInSlot[i].CurrentRechargeTime);
+                    p1.CardStatus.Add(Player1.Slots[i].CurrentRechargeTime);
                 }
-                if (Player2.CardInSlot[i].ReloadRequest) p2.CardStatus.Add(-1);
+                if (Player2.Slots[i].ReloadRequest) p2.CardStatus.Add(-1);
                 else
                 {
-                    p2.CardStatus.Add(Player2.CardInSlot[i].CurrentRechargeTime);
+                    p2.CardStatus.Add(Player2.Slots[i].CurrentRechargeTime);
                 }
 
             }
@@ -86,7 +83,8 @@ namespace Core
                         int numSlot;
                         if (int.TryParse(splitedCommand[1], out numSlot))
                         {
-                            return Player1.CardInSlot[numSlot].SummonCard().ToString().ToLower();
+                            string v = Player1.PutCard(numSlot).ToString().ToLower();
+                            return v;
                         }
                         return "false";
                     }
@@ -100,13 +98,13 @@ namespace Core
                 case "AddCristall":
                     {
 
-                        Player1.CardInSlot[int.Parse(splitedCommand[1])].Cristall++;
+                        Player1.Slots[int.Parse(splitedCommand[1])].Cristall++;
                         return Player1.Cristal.RemoveCristall().ToString().ToLower();
                     }
                 //RemoveCristall 1 1 - с удалить кристал в кучу с 1го слота player 1 
                 case "RemoveCristall":
                     {
-                        if (Player1.CardInSlot[int.Parse(splitedCommand[1])].CristallRemove())
+                        if (Player1.Slots[int.Parse(splitedCommand[1])].CristallRemove())
                         {
                             Player1.Cristal.AddCristal();
                             return "true";
@@ -117,9 +115,9 @@ namespace Core
                 case "ReplaceCristall":
                     {
 
-                        if (Player1.CardInSlot[int.Parse(splitedCommand[1])].CristallRemove())
+                        if (Player1.Slots[int.Parse(splitedCommand[1])].CristallRemove())
                         {
-                            Player1.CardInSlot[int.Parse(splitedCommand[2])].Cristall++;
+                            Player1.Slots[int.Parse(splitedCommand[2])].Cristall++;
                             return "true"; 
                         }
                         return "false";
