@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using CommonElement;
+using System.Reflection;
+using System;
 namespace Core
 {
     internal class cSlotManager
@@ -18,17 +21,30 @@ namespace Core
                 Slots.Add(player2.Slots[i], new StoreEffects());
                 Slots[player2.Slots[i]].Tags.Add("p2");
             }
+
         }
-        
+        public Card CalcEffect(Slot slot, Card card)
+        {
+            for (int i = 0; i < Slots[slot].Effects.Count; i++)
+            {
+                ParameterInfo[] pInfo = Slots[slot].Effects[i].GetParameters();
+                Slots[slot].Effects[i].Invoke(null,new object[] { card, "Attack", 40});
+            }
+
+        }
+        public void AddEffectToSlot(String methodNameEffect,Slot slot)
+        {
+           MethodInfo info = typeof(Effect).GetMethod(methodNameEffect);
+        }
     }
     internal class StoreEffects
     {
        public  List<string> Tags { get; set; }
-       public  List<Effect> Effects { get; set; }
+       public  List<MethodInfo> Effects { get; set; }
         public StoreEffects()
         {
             Tags = new List<string>();
-            Effects = new List<Effect>();
+            Effects = new List<MethodInfo>();
         }
     }
 }
