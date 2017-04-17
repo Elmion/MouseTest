@@ -14,13 +14,14 @@ namespace Core
         internal BattleField Battle;
         internal Player Player1;
         internal Player Player2;
+        internal cSlotManager slotManager; 
         public GameCore()
         {
             CardsBase.Instance.LoadCards();
             Player1 = new Player(0,this);
             Player2 = new Player(1,this);
+            slotManager = new cSlotManager(Player1,Player2);
             Battle = new BattleField();
-
         }
        public void Update()
         {
