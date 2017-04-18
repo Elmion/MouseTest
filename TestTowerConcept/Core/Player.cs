@@ -66,16 +66,7 @@ namespace Core
         {
             Cardbook.Add(c);
         }
-        public bool PutCard(int numSlot)
-        {
-           Card c =  Slots[numSlot].SummonCard();
-           if(c != null && core.Battle.CreateCard(Team, c))
-            {
-                Slots[numSlot].RechargeCard();
-                return true;
-            }
-            return false;
-        }
+
         public void ChangeCardsInSlot(params int[] numSlots)
         {
             for (int i = 0; i < numSlots.Length; i++)

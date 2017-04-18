@@ -15,7 +15,7 @@ namespace Core
         internal int  CurrentReloadTime;
         internal bool ReloadRequest;
         internal int  Cristall { get; set; }
-        internal List<SlotBuff> ConsumedEffects;
+
         public string CardName
         {
             get { return _cardName; }
@@ -30,8 +30,7 @@ namespace Core
 
         public Slot(Player p)
         {
-            Cristall = 0;
-            
+            Cristall = 0; 
         }
         public bool CristallRemove()
         {

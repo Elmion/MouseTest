@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <Spell>
+    <Name>PowerUp</Name>
+    <Description>Слот: Aтака +40%</Description>
+    <MethodName>ChangeParamProcent</MethodName>
+    <Trigger>SummonCard</Trigger>
+    <Param>
+      <p>card</p>
+      <p>Attack</p>
+      <p>60</p>
+    </Param>
+  </Spell>
+</root>

@@ -18,9 +18,11 @@ namespace Core
         public GameCore()
         {
             CardsBase.Instance.LoadCards();
+            SlotBuffSystem.SpellsBase.Instance.LoadBuff();
             Player1 = new Player(0,this);
             Player2 = new Player(1,this);
-            slotManager = new cSlotManager(Player1,Player2);
+            slotManager = new cSlotManager(this);
+            slotManager.AddEffectToSlot("PowerUp", 0, 0);
             Battle = new BattleField();
         }
        public void Update()
@@ -84,7 +86,7 @@ namespace Core
                         int numSlot;
                         if (int.TryParse(splitedCommand[1], out numSlot))
                         {
-                            string v = Player1.PutCard(numSlot).ToString().ToLower();
+                            string v = slotManager.PutCard(numSlot,0).ToString().ToLower();
                             return v;
                         }
                         return "false";

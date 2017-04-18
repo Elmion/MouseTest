@@ -6,45 +6,78 @@ namespace Core
 {
     internal class cSlotManager
     {
-        private Player player1;
-        private Player player2;
         Dictionary<Slot, StoreEffects> Slots;
-        public cSlotManager(Player player1, Player player2)
+        GameCore core;
+        public cSlotManager(GameCore core)
         {
-            this.player1 = player1;
-            this.player2 = player2;
+            this.core = core;
             Slots = new Dictionary<Slot, StoreEffects>();
-            for (int i = 0; i < player1.Slots.Count; i++)
+            for (int i = 0; i < core.Player1.Slots.Count; i++)
             {
-                Slots.Add(player1.Slots[i], new StoreEffects());
-                Slots[player1.Slots[i]].Tags.Add("p1");
-                Slots.Add(player2.Slots[i], new StoreEffects());
-                Slots[player2.Slots[i]].Tags.Add("p2");
+                Slots.Add(core.Player1.Slots[i], new StoreEffects());
+                Slots[core.Player1.Slots[i]].Tags.AddRange(new string[] { "p0", i.ToString() });
+                Slots.Add(core.Player2.Slots[i], new StoreEffects());
+                Slots[core.Player2.Slots[i]].Tags.AddRange(new string[] { "p1", i.ToString() }); ;
             }
-
         }
-        public Card CalcEffect(Slot slot, Card card)
+
+        public void AddEffectToSlot(string EffectName, int numSlot, int team)
         {
-            for (int i = 0; i < Slots[slot].Effects.Count; i++)
+            Slot slot = FindSlotIndex(numSlot, team);
+            Slots[slot].Effects.Add(SlotBuffSystem.SpellsBase.Instance.FindBuff(EffectName));
+        }
+        public bool PutCard(int numSlot, int team)
+        {
+            Slot summonedSlot = FindSlotIndex(numSlot, team);
+
+            Card c = summonedSlot.SummonCard();
+
+            c = BuffCard(c,Slots[summonedSlot].Effects);//бафает карту.
+
+            if (c != null && core.Battle.CreateCard(team, c))
             {
-                ParameterInfo[] pInfo = Slots[slot].Effects[i].GetParameters();
-                Slots[slot].Effects[i].Invoke(null,new object[] { card, "Attack", 40});
+                summonedSlot.RechargeCard();
+                return true;
             }
-
+            return false;
         }
-        public void AddEffectToSlot(String methodNameEffect,Slot slot)
+        private Card BuffCard(Card c, List<SlotBuff> effects)
         {
-           MethodInfo info = typeof(Effect).GetMethod(methodNameEffect);
+            for (int i = 0; i < effects.Count; i++)
+            {
+               if(effects[i].Event == "SummonCard")
+                {
+                    var index = effects[i].Obj.FindIndex(x => (string)x == "card");
+                    if (effects[i].TypeObj[index] == typeof(Card))
+                    {
+                        effects[i].Obj[index] = c;
+                        c = effects[i].Method.Invoke(null, effects[i].Obj.ToArray()) as Card;
+                    }
+                }
+            }
+            return c;
+        }
+        private Slot FindSlotIndex(int numSlot, int team)
+        {
+            Slot IndexSlot = null; //Ищем слот по номеру
+            foreach (var slot in Slots.Keys)
+            {
+                if (Slots[slot].Tags[1] == numSlot.ToString() && Slots[slot].Tags[0] == ("p"+ team))
+                {
+                    IndexSlot = slot;
+                }
+            }
+            return IndexSlot;
         }
     }
     internal class StoreEffects
     {
        public  List<string> Tags { get; set; }
-       public  List<MethodInfo> Effects { get; set; }
+       public  List<SlotBuff> Effects { get; set; }
         public StoreEffects()
         {
             Tags = new List<string>();
-            Effects = new List<MethodInfo>();
+            Effects = new List<SlotBuff>();
         }
     }
 }

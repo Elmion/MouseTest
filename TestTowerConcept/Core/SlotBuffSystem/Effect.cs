@@ -4,8 +4,7 @@ namespace Core
 {
     internal class Effect
     {
-        public int EffectTime;
-        public Card ChangeParamProcent(Card card, string ParamCard,int valueChange)
+        public static Card ChangeParamProcent(Card card, string ParamCard,int valueChange)
         {
             PropertyInfo info = typeof(Card).GetProperty(ParamCard);
             if (info != null &&  info.PropertyType == typeof(int))
@@ -15,7 +14,7 @@ namespace Core
             }
             return card;
         }
-        public Card ChangeParamAbsolute(Card card, string ParamCard, int valueChange)
+        public static Card ChangeParamAbsolute(Card card, string ParamCard, int valueChange)
         {
             PropertyInfo info = typeof(Card).GetProperty(ParamCard);
             if (info != null && info.PropertyType == typeof(int))

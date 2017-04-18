@@ -60,6 +60,7 @@
     <Compile Include="Slot.cs" />
     <Compile Include="SlotBuffSystem\Effect.cs" />
     <Compile Include="SlotBuffSystem\SlotBuff.cs" />
+    <Compile Include="SlotBuffSystem\SpellsBase.cs" />
     <Compile Include="SpecialAttebute.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -88,6 +89,9 @@
       <Project>{5d02f43a-5cab-458e-aae2-dc0669f29a03}</Project>
       <Name>CommonElement</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SlotBuffSystem\SpellList.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
