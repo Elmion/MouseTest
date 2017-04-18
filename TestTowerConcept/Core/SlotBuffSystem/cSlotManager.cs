@@ -58,7 +58,7 @@ namespace Core
             }
             return c;
         }
-        private Slot FindSlotIndex(int numSlot, int team)
+        public Slot FindSlotIndex(int numSlot, int team)
         {
             Slot IndexSlot = null; //Ищем слот по номеру
             foreach (var slot in Slots.Keys)
@@ -70,6 +70,7 @@ namespace Core
             }
             return IndexSlot;
         }
+
     }
     internal class StoreEffects
     {

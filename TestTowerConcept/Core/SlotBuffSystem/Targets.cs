@@ -8,17 +8,21 @@ namespace Core.SlotBuffSystem
 {
     class Targets
     {
-        Slot SelectSelfSlot(cSlotManager sm)
+        public static Slot SelectSelfSlot(cSlotManager sm,int numSlot,int team)
         {
-
+            return sm.FindSlotIndex(numSlot, team);
         }
-        Slot SelectRightSlot(cSlotManager sm,int OrdinalNum)
+        public static Slot SelectRightSlot(cSlotManager sm, int numSlot, int team,int OrdinalNum)
         {
-
+            var index = numSlot + OrdinalNum;
+            if (index > 5) return null;
+            return sm.FindSlotIndex(index, team);
         }
-        Slot SelectLeftSlot(cSlotManager sm,int OrdinalNum)
+        public static Slot SelectLeftSlot(cSlotManager sm, int numSlot, int team,int OrdinalNum)
         {
-
+            var index = numSlot - OrdinalNum;
+            if (index < 0) return null;
+            return sm.FindSlotIndex(index, team);
         }
     }
 }

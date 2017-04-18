@@ -20,18 +20,24 @@ namespace Core.SlotBuffSystem
             {
                 XmlDocument doc = new XmlDocument();
                 doc.Load(Assembly.GetAssembly(typeof(SpellsBase)).GetManifestResourceStream("Core.SlotBuffSystem.SpellList.xml"));
-                var CurrentXMLCard = doc.DocumentElement.FirstChild;
+                var CurrentXML = doc.DocumentElement.FirstChild;
                 do
                 {
                     SlotBuff sb = new SlotBuff();
 
-                     sb.Name = CurrentXMLCard["Name"].InnerText;
-                     sb.Description = CurrentXMLCard["Description"].InnerText;
-                     sb.Event = CurrentXMLCard["Trigger"].InnerText;
-                     sb.Method = typeof(Effect).GetMethod(CurrentXMLCard["MethodName"].InnerText);
+                     sb.Name = CurrentXML["Name"].InnerText;
+                     sb.Description = CurrentXML["Description"].InnerText;
+                     sb.Event = CurrentXML["Trigger"].InnerText;
+                     sb.Method = typeof(Effect).GetMethod(CurrentXML["MethodName"].InnerText);
+                     var MethodTargets = CurrentXML["Targets"].FirstChild;
+                     do
+                        {
+                            sb.Targets.Add(typeof(Targets).GetMethod(MethodTargets.InnerText));
+                            MethodTargets = MethodTargets.NextSibling;
+                        } while (MethodTargets != null);
 
                      ParameterInfo[] info = sb.Method.GetParameters();
-                     var MethodParams = CurrentXMLCard["Param"].FirstChild;
+                     var MethodParams = CurrentXML["Param"].FirstChild;
                      for (int i = 0; i < info.Length; i++)
                         {
                              sb.TypeObj.Add(info[i].ParameterType);
@@ -48,9 +54,9 @@ namespace Core.SlotBuffSystem
                                 }
                              MethodParams = MethodParams.NextSibling;
                         }
-                    CurrentXMLCard = CurrentXMLCard.NextSibling;
+                    CurrentXML = CurrentXML.NextSibling;
                     BuffList.Add(sb);
-                } while (CurrentXMLCard != null);
+                } while (CurrentXML != null);
             }
             public SlotBuff FindBuff(string NameBuff)
             {

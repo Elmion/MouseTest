@@ -3,17 +3,28 @@
   <Spell>
     <Name>PowerUp</Name>
     <Description>Слот: Aтака +40%</Description>
-    <MethodName>ChangeParamProcent</MethodName>
-    <Trigger>SummonCard</Trigger>
-    <Targets>
-      <t>selfCard</t>
-  
-    </Targets>
-    <Param>
-      <p>card</p>
-      <p>Attack</p>
-      <p>60</p> 
-    </Param>
+      <Stage>
+        <MethodName>ChangeParamProcent</MethodName>
+        <Trigger>SummonCard</Trigger>
+        <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
+        <MobsFilter></MobsFilter>
+        <Param>
+          <p>card</p>
+          <p>Attack</p>
+          <p>60</p> 
+        </Param>
+      </Stage>
+      <Stage>
+        <MethodName>ChangeParamProcent</MethodName>
+        <Trigger>SummonCard</Trigger>
+        <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
+        <MobsFilter></MobsFilter>
+        <Param>
+          <p>card</p>
+          <p>Attack</p>
+          <p>30</p>
+        </Param>
+      </Stage>
   </Spell>
   <Spell>
     <Name>MassPowerUp</Name>
