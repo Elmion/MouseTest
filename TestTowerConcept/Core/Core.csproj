@@ -61,6 +61,7 @@
     <Compile Include="SlotBuffSystem\Effect.cs" />
     <Compile Include="SlotBuffSystem\SlotBuff.cs" />
     <Compile Include="SlotBuffSystem\SpellsBase.cs" />
+    <Compile Include="SlotBuffSystem\Targets.cs" />
     <Compile Include="SpecialAttebute.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

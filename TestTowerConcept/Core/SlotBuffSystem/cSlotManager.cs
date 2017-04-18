@@ -24,7 +24,8 @@ namespace Core
         public void AddEffectToSlot(string EffectName, int numSlot, int team)
         {
             Slot slot = FindSlotIndex(numSlot, team);
-            Slots[slot].Effects.Add(SlotBuffSystem.SpellsBase.Instance.FindBuff(EffectName));
+            SlotBuff sb = SlotBuffSystem.SpellsBase.Instance.FindBuff(EffectName);
+            Slots[slot].Effects.Add(sb);
         }
         public bool PutCard(int numSlot, int team)
         {

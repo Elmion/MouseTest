@@ -5,6 +5,24 @@
     <Description>Слот: Aтака +40%</Description>
     <MethodName>ChangeParamProcent</MethodName>
     <Trigger>SummonCard</Trigger>
+    <Targets>
+      <t>selfCard</t>
+  
+    </Targets>
+    <Param>
+      <p>card</p>
+      <p>Attack</p>
+      <p>60</p> 
+    </Param>
+  </Spell>
+  <Spell>
+    <Name>MassPowerUp</Name>
+    <Description>Слот: Aтака +40%</Description>
+    <MethodName>ChangeParamProcent</MethodName>
+    <Trigger>SummonCard</Trigger>
+    <Targets>
+      <t>selfCard</t>
+    </Targets>
     <Param>
       <p>card</p>
       <p>Attack</p>
