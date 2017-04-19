@@ -16,48 +16,57 @@ namespace Core.SlotBuffSystem
             {
                   BuffList  = new List<SlotBuff>();
             }
-            public void LoadBuff()
+        public void LoadBuff()
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(Assembly.GetAssembly(typeof(SpellsBase)).GetManifestResourceStream("Core.SlotBuffSystem.SpellList.xml"));
+            var CurrentXML = doc.DocumentElement.FirstChild;
+            do
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(Assembly.GetAssembly(typeof(SpellsBase)).GetManifestResourceStream("Core.SlotBuffSystem.SpellList.xml"));
-                var CurrentXML = doc.DocumentElement.FirstChild;
-                do
-                {
                     SlotBuff sb = new SlotBuff();
 
-                     sb.Name = CurrentXML["Name"].InnerText;
-                     sb.Description = CurrentXML["Description"].InnerText;
-                     sb.Event = CurrentXML["Trigger"].InnerText;
-                     sb.Method = typeof(Effect).GetMethod(CurrentXML["MethodName"].InnerText);
-                     var MethodTargets = CurrentXML["Targets"].FirstChild;
-                     do
-                        {
-                            sb.Targets.Add(typeof(Targets).GetMethod(MethodTargets.InnerText));
-                            MethodTargets = MethodTargets.NextSibling;
-                        } while (MethodTargets != null);
+                    sb.Name = CurrentXML["Name"].InnerText;
+                    sb.Description = CurrentXML["Description"].InnerText;
+                    sb.CastTrigger = CurrentXML["CastTrigger"].InnerText;
 
-                     ParameterInfo[] info = sb.Method.GetParameters();
-                     var MethodParams = CurrentXML["Param"].FirstChild;
-                     for (int i = 0; i < info.Length; i++)
+                    var StagesXML = CurrentXML.SelectNodes("Stage");
+                    for (int j = 0; j < StagesXML.Count; j++)
+                    {
+
+
+                        SlotSpellStage slotStage = new SlotSpellStage();
+                        slotStage.RefParent = sb;
+                        slotStage.Method = typeof(Effect).GetMethod(StagesXML[j]["MethodName"].InnerText);
+                        slotStage.SlotTargets = StagesXML[j]["SlotTargetMap"].InnerText;
+                        slotStage.Event = StagesXML[j]["Trigger"].InnerText;
+                        slotStage.RemoveEvent = StagesXML[j]["RemoveTrigger"].InnerText;
+                        slotStage.Timer = int.Parse(StagesXML[j]["RemoveTimer"].InnerText);
+                        ParameterInfo[] info = slotStage.Method.GetParameters();
+                        var MethodParams = StagesXML[j]["Param"].FirstChild;
+                        for (int i = 0; i < info.Length; i++)
                         {
-                             sb.TypeObj.Add(info[i].ParameterType);
-                                if (info[i].ParameterType == typeof(int))
-                                {
-                                    sb.Obj.Add(int.Parse(MethodParams.InnerText));
-                                } else
-                                if(info[i].ParameterType == typeof(string))
-                                {
-                                    sb.Obj.Add(MethodParams.InnerText);
-                                } else
-                                {
-                                    sb.Obj.Add(MethodParams.InnerText);
-                                }
-                             MethodParams = MethodParams.NextSibling;
+                            slotStage.TypeObj.Add(info[i].ParameterType);
+                            if (info[i].ParameterType == typeof(int))
+                            {
+                                slotStage.Obj.Add(int.Parse(MethodParams.InnerText));
+                            }
+                            else
+                            if (info[i].ParameterType == typeof(string))
+                            {
+                                slotStage.Obj.Add(MethodParams.InnerText);
+                            }
+                            else
+                            {
+                                slotStage.Obj.Add(MethodParams.InnerText);
+                            }
+                            MethodParams = MethodParams.NextSibling;
                         }
-                    CurrentXML = CurrentXML.NextSibling;
+                        sb.Stages.Add(slotStage);
+                    }
                     BuffList.Add(sb);
+                    CurrentXML = CurrentXML.NextSibling;
                 } while (CurrentXML != null);
-            }
+        }
             public SlotBuff FindBuff(string NameBuff)
             {
                return BuffList.FirstOrDefault(x => x.Name == NameBuff);

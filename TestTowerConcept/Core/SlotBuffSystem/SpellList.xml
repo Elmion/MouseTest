@@ -3,41 +3,51 @@
   <Spell>
     <Name>PowerUp</Name>
     <Description>Слот: Aтака +40%</Description>
+    <CastTrigger>Stay</CastTrigger>
       <Stage>
         <MethodName>ChangeParamProcent</MethodName>
-        <Trigger>SummonCard</Trigger>
         <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
         <MobsFilter></MobsFilter>
+        <Trigger>SummonCard</Trigger>
+        <RemoveTrigger>SummonCard,Reload</RemoveTrigger>
+        <RemoveTimer>0</RemoveTimer>
         <Param>
           <p>card</p>
           <p>Attack</p>
-          <p>60</p> 
+          <p>200</p> 
         </Param>
       </Stage>
       <Stage>
         <MethodName>ChangeParamProcent</MethodName>
-        <Trigger>SummonCard</Trigger>
         <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
         <MobsFilter></MobsFilter>
+        <Trigger>SummonCard</Trigger>
+        <RemoveTrigger>Recharge,Reload</RemoveTrigger>
+        <RemoveTimer>0</RemoveTimer>
         <Param>
           <p>card</p>
           <p>Attack</p>
-          <p>30</p>
+          <p>100</p>
         </Param>
       </Stage>
   </Spell>
   <Spell>
     <Name>MassPowerUp</Name>
     <Description>Слот: Aтака +40%</Description>
-    <MethodName>ChangeParamProcent</MethodName>
-    <Trigger>SummonCard</Trigger>
-    <Targets>
-      <t>selfCard</t>
-    </Targets>
-    <Param>
-      <p>card</p>
-      <p>Attack</p>
-      <p>60</p>
-    </Param>
+    <CastTrigger>Stay</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamProcent</MethodName>
+      <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <CastTrigger>ReloadCard</CastTrigger>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>SummonCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>Attack</p>
+        <p>30</p>
+      </Param>
+    </Stage>
   </Spell>
 </root>

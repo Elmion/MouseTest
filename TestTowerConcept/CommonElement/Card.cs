@@ -14,9 +14,9 @@ namespace CommonElement
         public virtual int Height { get; set; }
         public virtual int Width { get; set; }
         public virtual int RechargeTime { get; set; }
-
-       // List<SpecialAttebute> BaseSpecial;
-       public  Card()
+        public virtual string Effect { get; set; }
+        // List<SpecialAttebute> BaseSpecial;
+        public  Card()
         {     
         }
        public virtual void LevelUp()

@@ -22,7 +22,6 @@ namespace Core
             Player1 = new Player(0,this);
             Player2 = new Player(1,this);
             slotManager = new cSlotManager(this);
-            slotManager.AddEffectToSlot("PowerUp", 0, 0);
             Battle = new BattleField();
         }
        public void Update()
