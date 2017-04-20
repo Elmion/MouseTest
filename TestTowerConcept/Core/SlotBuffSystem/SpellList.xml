@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
   <Spell>
-    <Name>PowerUp</Name>
+    <Name>MageMassPowerUp</Name>
     <Description>Слот: Aтака +40%</Description>
     <CastTrigger>Stay</CastTrigger>
       <Stage>
@@ -9,7 +9,7 @@
         <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
         <MobsFilter></MobsFilter>
         <Trigger>SummonCard</Trigger>
-        <RemoveTrigger>SummonCard,Reload</RemoveTrigger>
+        <RemoveTrigger>SummonCard,ReloadCard</RemoveTrigger>
         <RemoveTimer>0</RemoveTimer>
         <Param>
           <p>card</p>
@@ -22,7 +22,7 @@
         <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
         <MobsFilter></MobsFilter>
         <Trigger>SummonCard</Trigger>
-        <RemoveTrigger>Recharge,Reload</RemoveTrigger>
+        <RemoveTrigger>Recharge,ReloadCard</RemoveTrigger>
         <RemoveTimer>0</RemoveTimer>
         <Param>
           <p>card</p>
@@ -32,21 +32,172 @@
       </Stage>
   </Spell>
   <Spell>
-    <Name>MassPowerUp</Name>
-    <Description>Слот: Aтака +40%</Description>
-    <CastTrigger>Stay</CastTrigger>
+    <Name>OgrPowerUp</Name>
+    <Description>Слот: HP +300%</Description>
+    <CastTrigger>SummonCard</CastTrigger>
     <Stage>
       <MethodName>ChangeParamProcent</MethodName>
-      <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
+      <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
       <MobsFilter></MobsFilter>
-      <CastTrigger>ReloadCard</CastTrigger>
       <Trigger>SummonCard</Trigger>
       <RemoveTrigger>SummonCard</RemoveTrigger>
       <RemoveTimer>0</RemoveTimer>
       <Param>
         <p>card</p>
+        <p>HP</p>
+        <p>300</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>BeeSpeedUp</Name>
+    <Description>Слот: Перезагрузка -50%</Description>
+    <CastTrigger>SummonCard</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamProcent</MethodName>
+      <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>RechargeTime</p>
+        <p>-50</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>KnightPower</Name>
+    <Description>Слот: Бафает соседей на +10 к НР</Description>
+    <CastTrigger>Stay</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>HP</p>
+        <p>10</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>KamicadzePower</Name>
+    <Description>Слот: Ускоряет свой слот на +3</Description>
+    <CastTrigger>SummonCard</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>SummonCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>RunSpeed</p>
+        <p>3</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>OloloSolderPower</Name>
+    <Description>Слот: Aтака +40%</Description>
+    <CastTrigger>SummonCard</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>RunSpeed</p>
+        <p>1</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>RedCatPower</Name>
+    <Description>Слот: Aтака +40%</Description>
+    <CastTrigger>SummonCard</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>0 0 0 1 0 1 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>RunSpeed</p>
+        <p>1</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>WildDimonPower</Name>
+    <Description>Слот:Бафает свой слот на 400% Атаки но замедляет на -1. Снимается перезагрузкой слота</Description>
+    <CastTrigger>SummonCard</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>RunSpeed</p>
+        <p>-1</p>
+      </Param>
+    </Stage>
+    <Stage>
+      <MethodName>ChangeParamProcent</MethodName>
+      <SlotTargetMap>0 0 0 0 1 0 0 0 0</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
         <p>Attack</p>
-        <p>30</p>
+        <p>400</p>
+      </Param>
+    </Stage>
+  </Spell>
+  <Spell>
+    <Name>AcademicPower</Name>
+    <Description>Слот: Aтака +40%</Description>
+    <CastTrigger>Stay</CastTrigger>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>1 1 1 1 1 1 1 1 1</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>RechargeCard,ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>Attack</p>
+        <p>1</p>
+      </Param>
+    </Stage>
+    <Stage>
+      <MethodName>ChangeParamAbsolute</MethodName>
+      <SlotTargetMap>1 1 1 1 1 1 1 1 1</SlotTargetMap>
+      <MobsFilter></MobsFilter>
+      <Trigger>SummonCard</Trigger>
+      <RemoveTrigger>RechargeCard,ReloadCard</RemoveTrigger>
+      <RemoveTimer>0</RemoveTimer>
+      <Param>
+        <p>card</p>
+        <p>HP</p>
+        <p>1</p>
       </Param>
     </Stage>
   </Spell>

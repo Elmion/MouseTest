@@ -10,7 +10,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime>
-    <Effect>PowerUp</Effect>  
+    <Effect>MageMassPowerUp</Effect>  
   </Card>
   <Card>
     <Name>Ogr</Name>
@@ -22,7 +22,7 @@
     <Height>20</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime> 
-    <Effect>PowerUp</Effect>  
+    <Effect>OgrPowerUp</Effect>  
   </Card>
     <Card>
     <Name>Bee</Name>
@@ -34,7 +34,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime>  
-    <Effect>PowerUp</Effect>  
+    <Effect>BeeSpeedUp</Effect>  
   </Card>
     <Card>
     <Name>Knight</Name>
@@ -46,7 +46,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime> 
-    <Effect>PowerUp</Effect>  
+    <Effect>KnightPower</Effect>  
   </Card>
   <Card>
     <Name>Kamicadze</Name>
@@ -58,7 +58,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime>   
-    <Effect>PowerUp</Effect>  
+    <Effect>KamicadzePower</Effect>  
   </Card>
     <Card>
     <Name>OloloSolder</Name>
@@ -70,7 +70,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime> 
-    <Effect>PowerUp</Effect>  
+    <Effect>OloloSolderPower</Effect>  
   </Card>
   <Card>
     <Name>RedCat</Name>
@@ -82,7 +82,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime>  
-    <Effect>PowerUp</Effect>  
+    <Effect>RedCatPower</Effect>  
   </Card>
   <Card>
     <Name>Orc</Name>
@@ -94,7 +94,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime> 
-    <Effect>PowerUp</Effect>  
+    <Effect></Effect>  
   </Card>
   <Card>
     <Name>Portal</Name>
@@ -118,7 +118,7 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime>  
-    <Effect>PowerUp</Effect>  
+    <Effect>WildDimonPower</Effect>  
   </Card>
   <Card>
     <Name>Academic</Name>
@@ -130,6 +130,6 @@
     <Height>10</Height>
     <Width>10</Width>
     <RechargeTime>200</RechargeTime>  
-    <Effect>PowerUp</Effect>  
+    <Effect>AcademicPower</Effect>  
   </Card>
 </root>

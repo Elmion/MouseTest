@@ -50,7 +50,9 @@ namespace Core
         {
             foreach (Slot slot in Slots)
             {
+                if (slot.CurrentRechargeTime == 1) slot.SlotNowRecharged(slot, CardsBase.Instance.GetClone(slot.CardName));//Чтоб событие один раз скастовалосьБ кастуем его на 1 и потом оно отнимется следующим шагом
                 if (slot.CurrentRechargeTime > 0) slot.CurrentRechargeTime--;
+
                 if (slot.ReloadRequest) slot.CurrentReloadTime--;
                 if(slot.ReloadRequest && slot.CurrentReloadTime ==0)
                 {
@@ -58,6 +60,7 @@ namespace Core
                     slot.CardName = Cardbook[rndCard];
                     Cardbook.RemoveAt(rndCard);
                     slot.ReloadRequest = false;
+                    slot.SlotNowReload(slot, CardsBase.Instance.GetClone(slot.CardName));
                 }
             }
             Cristal.Update();
@@ -73,6 +76,7 @@ namespace Core
             {
                 if (Slots[numSlots[i]].CurrentRechargeTime > 0) continue;
                 Cardbook.Add(Slots[numSlots[i]].CardName);
+                Slots[numSlots[i]].SlotGoToReload(Slots[numSlots[i]], CardsBase.Instance.GetClone(Slots[numSlots[i]].CardName));
                 Slots[numSlots[i]].CardName = "";
                 Slots[numSlots[i]].CurrentReloadTime = 100;//10 секунд
                 Slots[numSlots[i]].ReloadRequest= true;

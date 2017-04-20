@@ -81,6 +81,7 @@
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ucCard_DragEnter);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ucCard_MouseClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ucCard_MouseDown_1);
+            this.MouseEnter += new System.EventHandler(this.ucCard_MouseEnter);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ucCard_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ucCard_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.pbPic)).EndInit();

@@ -57,6 +57,18 @@ namespace Core
             {
                 p1.CardInSlots.Add(Player1.Slots[i].CardName);
                 p2.CardInSlots.Add(Player2.Slots[i].CardName);
+                p1.EffectInfo.Add(new List<string>());
+                p2.EffectInfo.Add(new List<string>());
+
+                foreach (var item in slotManager.Slots[Player1.Slots[i]].Effects)
+                {
+                    p1.EffectInfo[i].Add(item.RefParent.Name);
+                }
+                foreach (var item in slotManager.Slots[Player2.Slots[i]].Effects)
+                {
+                    p2.EffectInfo[i].Add(item.RefParent.Name);
+                }
+
 
                 if (Player1.Slots[i].ReloadRequest) p1.CardStatus.Add(-1);
                 else

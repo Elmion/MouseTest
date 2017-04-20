@@ -102,6 +102,7 @@ namespace TestTowerConcept
             {
                 PlayerCardsInSlot[i].card =  pInfo[User].CardInSlots[i];
                 PlayerCardsInSlot[i].Recharge = pInfo[User].CardStatus[i];
+                PlayerCardsInSlot[i].Effects = pInfo[User].EffectInfo[i];
             }
             foreach (ucCard cardView in PlayerCardsInSlot) cardView.Update();
             ucFieldView1.Invalidate();

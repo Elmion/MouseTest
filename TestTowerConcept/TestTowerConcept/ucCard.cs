@@ -15,6 +15,7 @@ namespace TestTowerConcept
         public string card;
         public int Recharge;
         public int Cristall;
+        public List<string> Effects;
 
         private bool TryDragCristal = false;
         public CristallRecycle cr;
@@ -117,6 +118,18 @@ namespace TestTowerConcept
                 dragBoxFromMouseDown = Rectangle.Empty;
                 DoDragDrop(this, DragDropEffects.Copy);
             }
+        }
+
+        private void ucCard_MouseEnter(object sender, EventArgs e)
+        {
+            Console.WriteLine("-----------------+");
+            Console.WriteLine(card);
+            Console.WriteLine("-----------------+");
+            for (int i = 0; i < Effects.Count; i++)
+            {
+                Console.WriteLine(Effects[i]);
+            }
+            Console.WriteLine("-----------------+");
         }
     }
 }

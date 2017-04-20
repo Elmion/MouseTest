@@ -6,10 +6,15 @@ namespace Core
     internal class Slot
     {
         #region События
-        public  Action SendSlotToReload;
-        public  Action SummonedCard;
-        public  Action CristallConsumed;
-        public  Action CardChanged;
+        public Action<Slot,Card> SlotGoToRecharge;
+        public Action<Slot,Card> SlotNowRecharged;
+        public Action<Slot,Card> SlotGoToReload;
+        public Action<Slot,Card> SlotNowReload;
+        public Action<Slot> SlotGoToUpgarade;
+        public Action<Slot> SlotNowUpgraded;
+        public Action<Slot> SlotGoDegrade;
+        public Action<Slot> SlotNowDegraded;
+
         #endregion
         internal int  CurrentRechargeTime;
         internal int  CurrentReloadTime;
@@ -57,6 +62,7 @@ namespace Core
         }
         public void RechargeCard()
         {
+            SlotGoToRecharge(this, cacheCardInSlot);
             CurrentRechargeTime = cacheCardInSlot.RechargeTime;
         }
     }
