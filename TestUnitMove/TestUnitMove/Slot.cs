@@ -6,16 +6,99 @@ using System.Threading.Tasks;
 
 namespace TestUnitMove
 {
-    class Slot
+   public class Slot
     {
-   
-        private Main _parentGame;
-        public Main Game { get { return _parentGame; } }
+       public Action<Slot> ChangeStatus;
+       public Func<Card,Card> BuffCard;
+       public  Card TemplateCard;
 
-        public Slot(Main game)
+        public IStatus Status { get; set; }
+        public IStatus PreveriosStatus { get; set; }
+
+        private Game _parentGame;
+        public Game Game { get { return _parentGame; } }
+
+        public Slot(Game game)
         {
             _parentGame = game;
         }
+        public void SetCard(Card card)
+        {
+            TemplateCard = card;
+            TemplateCard.ActivateEvents(this);
+        }
+        public void SetStatus(IStatus status)
+        {
+            ChangeStatus(this);
+        }
+        public void Recharge()
+        {
+            SetStatus(new Recharging(this));
+        }
+        public void SummonCard()
+        {
+            SetStatus(new Summoning(this));
+
+            Card summoningCard = TemplateCard.Clone();
+            summoningCard = BuffCard(summoningCard);
+
+            Recharge();
+        }
 
     }
+    public interface IStatus
+    {
+
+    }
+
+    class Recharging : IStatus
+    {
+        private Slot _slot;
+
+        public Recharging(Slot slot)
+        {
+            _slot = slot;
+            slot.PreveriosStatus = slot.Status;
+            slot.Status = this;
+        }
+
+    }
+    class Stay : IStatus
+    {
+        private Slot _slot;
+
+        public Stay(Slot slot)
+        {
+            _slot = slot;
+            slot.PreveriosStatus = slot.Status;
+            slot.Status = this;
+        }
+
+    }
+    class Summoning : IStatus
+    {
+        private Slot _slot;
+
+        public Summoning(Slot slot)
+        {
+            _slot = slot;
+            slot.PreveriosStatus = slot.Status;
+            slot.Status = this;
+        }
+
+    }
+    class Reloading : IStatus
+    {
+        private Slot _slot;
+
+        public Reloading(Slot slot)
+        {
+            _slot = slot;
+            slot.PreveriosStatus = slot.Status;
+            slot.Status = this;
+        }
+
+    }
+
+
 }

@@ -15,6 +15,7 @@ namespace TestUnitMove
         public Form1()
         {
             InitializeComponent();
+            new Game();
         }
     }
 }

@@ -8,11 +8,11 @@ namespace TestUnitMove
 {
     public class Unit
     {
-        private Main _parentGame;
-        public Main Game { get { return _parentGame; } }
+        private Game _parentGame;
+        public Game Game { get { return _parentGame; } }
 
         IMove moveType;
-        public Unit(Main game, IMove move)
+        public Unit(Game game, IMove move)
         {
             _parentGame = game;
             moveType = move;
