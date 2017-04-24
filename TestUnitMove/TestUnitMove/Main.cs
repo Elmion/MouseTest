@@ -18,6 +18,8 @@ namespace TestUnitMove
             Slots[0].SetCard(m);
             Slots[0].SetStatus(new Stay(Slots[0]));
             Slots[0].SummonCard();
+            effectManager.Update();
+            Slots[0].SummonCard();
         }
     }
 }

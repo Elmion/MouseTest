@@ -29,7 +29,8 @@ namespace TestUnitMove
         }
         public void SetStatus(IStatus status)
         {
-            ChangeStatus(this);
+            if(ChangeStatus != null)
+                           ChangeStatus(this);
         }
         public void Recharge()
         {
@@ -40,9 +41,14 @@ namespace TestUnitMove
             SetStatus(new Summoning(this));
 
             Card summoningCard = TemplateCard.Clone();
-            summoningCard = BuffCard(summoningCard);
+            if (BuffCard != null) 
+                 summoningCard = BuffCard(summoningCard);
 
             Recharge();
+        }
+        public void Update()
+        {
+
         }
 
     }
@@ -50,7 +56,6 @@ namespace TestUnitMove
     {
 
     }
-
     class Recharging : IStatus
     {
         private Slot _slot;

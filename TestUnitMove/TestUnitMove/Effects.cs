@@ -8,10 +8,14 @@ namespace TestUnitMove
 {
    public  interface IEffect
     {
+        //Цели эффекта
         object[] GetTargets(Slot slot);
+        //Реализует эффект для предоставленой карты
         Card BuffCard(Card card);
+        //Вызов при любом изменении статуса слота
         void Update(Slot slot);
-        void Update();
+        //Общее обновление эффекта
+        void TikTak();
     }
     public interface ITarget
     {
@@ -19,7 +23,7 @@ namespace TestUnitMove
     }
     class EffectsManager
     {
-        List<IEffect> ListEffect;
+        List<IEffect> ListEffect = new List<IEffect>();
 
         internal void AddBuff(Slot slot)
         {
@@ -38,19 +42,60 @@ namespace TestUnitMove
                         slot.BuffCard += effect.BuffCard;
                     }
                 }
-            } 
+                ListEffect.Add(effect);
+            }
         }
         internal void Update()
         {
             foreach (var item in ListEffect)
             {
-                item.Update();
+                item.TikTak();
             }
+            //отлючаем эффекты которые помечены к удалению
+            for (int i = 0; i <  ListEffect.Count; i++)
+            {
+                 var tempEffect = (Effect)ListEffect[i];
+                 if (tempEffect._RemoveFlag == false) continue;
+
+                var objectToDisconectEvents = tempEffect._CurrentTargets;
+                for (int j = 0; j < objectToDisconectEvents.Length; j++)
+                {
+                    if (objectToDisconectEvents[i] is Unit)
+                    {
+
+                    }
+                    if (objectToDisconectEvents[i] is Slot)
+                    {
+                        var tempSlot = objectToDisconectEvents[i] as Slot;
+                        tempSlot.ChangeStatus -= ListEffect[i].Update;
+                        tempSlot.BuffCard -= ListEffect[i].BuffCard;
+                    }
+                } 
+            }
+            //сносим эффекты
+            ListEffect.RemoveAll(x => ((Effect)x)._RemoveFlag == true);
         }
+        internal object[] GetSlotEffects(Slot slot)
+        {
+            Delegate[] list = slot.ChangeStatus.GetInvocationList();
+            object[] outArr = new object[list.Length];
+            for (int i = 0; i < list.Length; i++)
+            {
+                outArr[i] = list[i].Target; 
+            }
+            return outArr;
+        }
+
     }
     public abstract class Effect
     {
-      internal virtual ITarget _targetsHandler { get; set; }
+        internal virtual bool _RemoveFlag { get; set; }
+        internal virtual ITarget _targetsHandler { get; set; }
+        internal virtual object[] _CurrentTargets { get; set; }
+        public Effect()
+        {
+            _RemoveFlag = false;
+        }
     }
 
     class SpellUpIntellect : Effect, IEffect
@@ -63,9 +108,10 @@ namespace TestUnitMove
         }
         public object[] GetTargets(Slot slot)
         {
-            return _targetsHandler.GetTargets(slot);
+            _CurrentTargets = _targetsHandler.GetTargets(slot);
+            return _CurrentTargets;
         }
-        public void Update()
+        public void TikTak()
         {
 
         }
@@ -76,7 +122,7 @@ namespace TestUnitMove
             {
                 case "Recharging":
                     {
-                        
+                        Remove();
                         break;
                     }
                 case "Stay":
@@ -86,7 +132,7 @@ namespace TestUnitMove
                     }
                 case "Summoning":
                     {
-
+                        
                         break;
                     }
                 case "Reloading":
@@ -94,9 +140,12 @@ namespace TestUnitMove
 
                         break;
                     }
-
-
             }
+
+        }
+        public void Remove()
+        {
+            _RemoveFlag = true;
         }
     }
 }
