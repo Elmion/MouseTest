@@ -8,9 +8,9 @@ namespace TestUnitMove
 {
    public class Slot
     {
-       public Action<Slot> ChangeStatus;
-       public Func<Card,Card> BuffCard;
-       public  Card TemplateCard;
+        public Func< object[] ,object> ChangeStatus;
+        public Func<Card,Card> BuffCard;
+        public  Card TemplateCard;
 
         public IStatus Status { get; set; }
         public IStatus PreveriosStatus { get; set; }
@@ -27,23 +27,21 @@ namespace TestUnitMove
             TemplateCard = card;
             TemplateCard.ActivateEvents(this);
         }
-        public void SetStatus(IStatus status)
-        {
-            if(ChangeStatus != null)
-                           ChangeStatus(this);
-        }
         public void Recharge()
         {
-            SetStatus(new Recharging(this));
+            new Recharging(this);
+            ChangeStatus(new object[] { this });
         }
         public void SummonCard()
         {
-            SetStatus(new Summoning(this));
+            new BeforeSummoning(this);
 
             Card summoningCard = TemplateCard.Clone();
-            if (BuffCard != null) 
-                 summoningCard = BuffCard(summoningCard);
+            if (ChangeStatus != null) 
+                 summoningCard = (Card)ChangeStatus(new object[] { this, summoningCard });
 
+            new AfterSummoning(this);
+            //изменение юнита после вызова.//Иницилизация начальных бафов и механик юнита.
             Recharge();
         }
         public void Update()
@@ -80,11 +78,23 @@ namespace TestUnitMove
         }
 
     }
-    class Summoning : IStatus
+    class AfterSummoning : IStatus
     {
         private Slot _slot;
 
-        public Summoning(Slot slot)
+        public AfterSummoning(Slot slot)
+        {
+            _slot = slot;
+            slot.PreveriosStatus = slot.Status;
+            slot.Status = this;
+        }
+
+    }
+    class BeforeSummoning : IStatus
+    {
+        private Slot _slot;
+
+        public BeforeSummoning(Slot slot)
         {
             _slot = slot;
             slot.PreveriosStatus = slot.Status;

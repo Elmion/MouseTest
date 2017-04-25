@@ -6,16 +6,26 @@ using System.Threading.Tasks;
 
 namespace TestUnitMove
 {
-   public  interface IEffect
+
+    public interface IEffect
+    {
+        //Общее обновление эффекта
+        void TikTak();
+        object Update(object[] Objects);
+    }
+
+   public  interface IEffectSlot :IEffect
     {
         //Цели эффекта
         object[] GetTargets(Slot slot);
+    }
+    public interface IEffectUnit : IEffect
+    {
+        //Цели эффекта
+        object[] GetTargets(Unit unit);
         //Реализует эффект для предоставленой карты
-        Card BuffCard(Card card);
-        //Вызов при любом изменении статуса слота
-        void Update(Slot slot);
-        //Общее обновление эффекта
-        void TikTak();
+        Unit BuffUnit(Unit unit);
+       
     }
     public interface ITarget
     {
@@ -29,21 +39,44 @@ namespace TestUnitMove
         {
             foreach (var effect in slot.TemplateCard.effects)
             {
-                object[] Targets = effect.GetTargets(slot);
+                object[] Targets = ((IEffectSlot)effect).GetTargets(slot);
                 for (int i = 0; i < Targets.Length; i++)
                 {
                     if(Targets[i] is Unit)
                     {
+                        ((Unit)Targets[i]).ChangeStatus -= ((IEffectUnit)ListEffect[i]).Update;
+                        ((Unit)Targets[i]).BuffUnit -= ((IEffectUnit)ListEffect[i]).BuffUnit;
 
                     }
                     if(Targets[i] is Slot)
                     {
-                        slot.ChangeStatus += effect.Update;
-                        slot.BuffCard += effect.BuffCard;
+                       ((Slot)Targets[i]).ChangeStatus += ((IEffectSlot)effect).Update;
                     }
                 }
                 ListEffect.Add(effect);
             }
+        }
+        internal void AddBuff(Unit unit)
+        {
+            //foreach (var effect in unit.TemplateCard.effects)
+            //{
+            //    object[] Targets = ((IEffectSlot)effect).GetTargets(slot);
+            //    for (int i = 0; i < Targets.Length; i++)
+            //    {
+            //        if (Targets[i] is Unit)
+            //        {
+            //            ((Unit)Targets[i]).ChangeStatus -= ((IEffectUnit)ListEffect[i]).Update;
+            //            ((Unit)Targets[i]).BuffUnit -= ((IEffectUnit)ListEffect[i]).BuffUnit;
+
+            //        }
+            //        if (Targets[i] is Slot)
+            //        {
+            //            ((Slot)Targets[i]).ChangeStatus += ((IEffectSlot)effect).Update;
+            //            ((Slot)Targets[i]).BuffCard += ((IEffectSlot)effect).BuffCard;
+            //        }
+            //    }
+            //    ListEffect.Add(effect);
+            //}
         }
         internal void Update()
         {
@@ -62,13 +95,14 @@ namespace TestUnitMove
                 {
                     if (objectToDisconectEvents[i] is Unit)
                     {
-
+                        var tempSlot = objectToDisconectEvents[i] as Unit;
+                        tempSlot.ChangeStatus -= ((IEffectUnit)ListEffect[i]).Update;
+                        tempSlot.BuffUnit -= ((IEffectUnit)ListEffect[i]).BuffUnit;
                     }
                     if (objectToDisconectEvents[i] is Slot)
                     {
                         var tempSlot = objectToDisconectEvents[i] as Slot;
-                        tempSlot.ChangeStatus -= ListEffect[i].Update;
-                        tempSlot.BuffCard -= ListEffect[i].BuffCard;
+                        tempSlot.ChangeStatus -= ((IEffectSlot)ListEffect[i]).Update;
                     }
                 } 
             }
@@ -98,14 +132,8 @@ namespace TestUnitMove
         }
     }
 
-    class SpellUpIntellect : Effect, IEffect
+    class SpellUpIntellect : Effect, IEffectSlot
     {
-        //Подумать как сделать стадии
-        public Card BuffCard(Card card)
-        {
-            card.Intellect++;
-            return card;
-        }
         public object[] GetTargets(Slot slot)
         {
             _CurrentTargets = _targetsHandler.GetTargets(slot);
@@ -115,9 +143,13 @@ namespace TestUnitMove
         {
 
         }
-        public void Update(Slot slot)
+        public object Update(object[] Objects)
         {
+            if (!(Objects[0] is Slot)) return null;
+            Slot slot = (Slot)Objects[0];
+           
             string status = slot.Status.GetType().ToString().Split('.').Last();
+
             switch (status)
             {
                 case "Recharging":
@@ -130,18 +162,24 @@ namespace TestUnitMove
 
                         break;
                     }
-                case "Summoning":
+                case "BeforeSummoning":
                     {
-                        
-                        break;
+                        Card card = Objects[1] as Card;
+                        card.Intellect++;
+                        return card;
                     }
+                case "AfterSummoning":
+                {
+                        Unit unit = Objects[1] as Unit;
+                        return unit;
+                }
                 case "Reloading":
                     {
 
                         break;
                     }
             }
-
+            return null;
         }
         public void Remove()
         {
