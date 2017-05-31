@@ -17,12 +17,20 @@ namespace ViewGame
         {
             InitializeComponent();
             Core c =  new Core();
-            string s = c.GenerateRandomField();
-            Console.WriteLine(s.Substring(0, 9));
-            Console.WriteLine(s.Substring(9, 9));
-            Console.WriteLine(s.Substring(18, 9));
-            List<Pair> cuples =  c.GetCuples(s, 9);
-            Console.WriteLine("--------------------------");
+            c.GeneratePrepareField("106600231" + "100000245" + "600000485");
+            DrawConsoleReport(c);
+            c.DeletePair(c.GetPairAtPosition(2, 3));
+            DrawConsoleReport(c);
+
+        }
+        public void DrawConsoleReport(Core c)
+        {
+            Console.WriteLine("+++++++++");
+            Console.WriteLine(c.GameField.ToString().Substring(0, 9));
+            Console.WriteLine(c.GameField.ToString().Substring(9, 9));
+            Console.WriteLine(c.GameField.ToString().Substring(18, 9));
+            List<Pair> cuples = c.GetCuples();
+            Console.WriteLine("---------");
 
             foreach (var item in cuples)
             {
