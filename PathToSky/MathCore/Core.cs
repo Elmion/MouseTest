@@ -9,32 +9,69 @@ namespace MathCore
     public class Core
     {
         public static Random rnd = new Random();
-        public StringBuilder GameField { get; private set; }
-        public int WidthGameField = 9;
-        private List<Pair> CurrentPairList;
+        private CoreData data;
+
+        ICommand currentCommand;
+        History historyBook;
+
         public Core()
+        {
+            data = new CoreData();
+        }
+        public object Run(ICommand command)
+        {
+            return command.Execute(data);
+        }
+        public void Undo()
+        {
+            historyBook.Undo(data);
+        }
+        public bool hasPair(int x1, int y1, int x2, int y2)
+        {
+            return data.GetPairAtPosition(x1, y1, x2, y2) == null ? false : true;
+        }
+        public bool hasPair(int FirstPosition, int SecondPosition)
+        {
+            return data.GetPairAtPosition(FirstPosition,SecondPosition) == null ? false : true;
+        }
+        public List<string> GetReport()
+        {
+            List<string> OUT = new List<string>();
+
+            OUT.Add("***********");
+
+            //рисуем поле
+            string stringfield = data.GameField.ToString();
+            int lineCount = (int)Math.Ceiling((double)(stringfield.Length)/data.WidthGameField);             
+            for (int i = 0; i < lineCount; i++)
+              {
+                    int lenghtTail = data.WidthGameField;
+                    if (stringfield.Length < i * data.WidthGameField + data.WidthGameField) lenghtTail = stringfield.Length - i * data.WidthGameField;
+                    OUT.Add("|" + stringfield.Substring(i * data.WidthGameField, lenghtTail) + "|");    
+              }
+            OUT.Add("|---------|");
+            foreach (var item in data.CurrentPairList)
+            {
+                OUT.Add("|" + item.ToString().PadRight(9) + "|");
+            }
+            OUT.Add("|---------|");
+            return OUT;
+        }
+    }
+    public class CoreData
+    {
+       public StringBuilder GameField;
+       public int WidthGameField = 9;
+       public List<Pair> CurrentPairList;
+       public CoreData()
         {
             GameField = new StringBuilder();
             CurrentPairList = new List<Pair>();
         }
-        public void GenerateRandomField()
+        //Полностью обновляет пары
+        public void RefreshCuplesData()
         {
-            StringBuilder OUT = new StringBuilder();
-            for (int i = 0; i < 27; i++)
-            {
-                OUT.Append(rnd.Next(0,10));
-            }
-            GameField = OUT;
-        }
-        public void GeneratePrepareField(string s)
-        {
-            GameField = new StringBuilder(s);
-            CurrentPairList = GetCuples();
-        }
-        public List<Pair> GetCuples()
-        {
-            List<Pair> listOUT = new List<Pair>();
-
+            CurrentPairList.Clear();
             //Буффер для вертикального анализа 
             FieldPosition[] VerticalBuff = new FieldPosition[WidthGameField];
 
@@ -73,7 +110,7 @@ namespace MathCore
                     Pair p = new Pair();
                     p.NumFirst = prevPosition.Clone();
                     p.NumSecond = current.Clone();
-                    listOUT.Add(p);
+                    CurrentPairList.Add(p);
                 }
                 prevPosition = current;
             }
@@ -98,7 +135,7 @@ namespace MathCore
                         Pair p = new Pair();
                         p.NumFirst = prevPosition.Clone();
                         p.NumSecond = current.Clone();
-                        listOUT.Add(p);
+                        CurrentPairList.Add(p);
                     }
                     //Вертикальное сравнение
                     if (GameField[i] == VerticalBuff[i % WidthGameField].Value)
@@ -106,7 +143,7 @@ namespace MathCore
                         Pair p = new Pair();
                         p.NumFirst = VerticalBuff[i % WidthGameField].Clone();
                         p.NumSecond = current.Clone();
-                        listOUT.Add(p);
+                        CurrentPairList.Add(p);
                     }
                     //Заменяем местов  вертикальном буфере 
                     VerticalBuff[i % WidthGameField].Value = GameField[i];
@@ -114,44 +151,28 @@ namespace MathCore
                     prevPosition = current;
                 }
             }
-            return listOUT;
-        }
-        public void DeletePair(Pair pair)
-        {
-            if (pair == null) return;
-            GameField[pair.NumFirst.Position] = '0';
-            GameField[pair.NumSecond.Position] = '0';
-
-            //Занести в историю изменения
-
-            CurrentPairList.Remove(pair);
-        }
-        public void DeleteLine(int NumLine)
-        {
-            
         }
         //Ищем пару по позиции в строке
         public Pair GetPairAtPosition(int FirstPosition, int SecondPosition)
         {
-            return CurrentPairList.Find(x => (x.NumFirst.Position == FirstPosition || x.NumFirst.Position == SecondPosition) && (x.NumSecond.Position == FirstPosition || x.NumSecond.Position == SecondPosition));
+            return CurrentPairList.Find(x => (x.NumFirst.Position == FirstPosition || x.NumFirst.Position == SecondPosition) &&
+                                      (x.NumSecond.Position == FirstPosition || x.NumSecond.Position == SecondPosition));
         }
         //Ищем пару по прямым координатам
-        public Pair GetPairAtPosition(int x1,int y1,int x2,int y2)
+        public Pair GetPairAtPosition(int x1, int y1, int x2, int y2)
         {
             int position1 = x1 * WidthGameField + y1;
             int position2 = x2 * WidthGameField + y2;
             return GetPairAtPosition(position1, position2);
         }
-
     }
-    
     public class Pair
     {
         public FieldPosition NumFirst { get; set; }
         public FieldPosition NumSecond { get; set; }
         public override string ToString()
         {
-                return NumFirst.Value + ":" + NumSecond.Value + "-" + NumFirst.Position + ":" + NumSecond.Position;
+                return NumFirst.Value + ":" + NumSecond.Value + "-" + NumFirst.Position.ToString().PadLeft(2) + ":" + NumSecond.Position.ToString().PadLeft(2);
         }
     }
     public class FieldPosition
