@@ -36,6 +36,10 @@ namespace MathCore
             {
                 data.RefreshCuplesData();
             }
+            else
+            {
+                data.GameFinish(true);
+            }
 
             return OUT;
         }

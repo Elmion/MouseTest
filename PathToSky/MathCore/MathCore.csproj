@@ -44,6 +44,7 @@
     <Compile Include="cmdDeleteLine.cs" />
     <Compile Include="cmdDeletePair.cs" />
     <Compile Include="cmdGenerateField.cs" />
+    <Compile Include="cmdRestartGame.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="History.cs" />
     <Compile Include="ICommand.cs" />

@@ -20,6 +20,7 @@ namespace MathCore
         }
         public object Run(ICommand command)
         {
+            if (data.GameEnd == true && command.GetType() != typeof(cmdRestartGame)) return data.GameWin?"Win":"Fail";
             return command.Execute(data);
         }
         public void Undo()
@@ -63,10 +64,13 @@ namespace MathCore
        public StringBuilder GameField;
        public int WidthGameField = 9;
        public List<Pair> CurrentPairList;
+       public bool GameEnd { get; private set; }
+       public bool GameWin { get; private set; }
        public CoreData()
         {
             GameField = new StringBuilder();
             CurrentPairList = new List<Pair>();
+            GameEnd = false;
         }
         //Полностью обновляет пары
         public void RefreshCuplesData()
@@ -164,6 +168,13 @@ namespace MathCore
             int position1 = x1 * WidthGameField + y1;
             int position2 = x2 * WidthGameField + y2;
             return GetPairAtPosition(position1, position2);
+        }
+        public void GameFinish(bool win)
+        {
+            GameEnd = true;
+            CurrentPairList.Clear();
+            GameField.Clear();
+            GameWin = win;
         }
     }
     public class Pair
