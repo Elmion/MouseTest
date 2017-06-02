@@ -8,6 +8,7 @@ namespace MathCore
 {
    public class cmdGenerateField : ICommand
     {
+        private string HistoryField = "";
         private string PreInstallField = string.Empty;
         public cmdGenerateField()
         {    
@@ -16,28 +17,37 @@ namespace MathCore
         {
             PreInstallField = field;
         }
-        public object Execute(CoreData core)
+        public object Execute(CoreData data)
         {
             if (PreInstallField == string.Empty)
             {
-                core.GameField.Clear();
+                data.GameField.Clear();
                 for (int i = 0; i < 27; i++)
                 {
-                    core.GameField.Append(Core.rnd.Next(0, 10));
+                    data.GameField.Append(Core.rnd.Next(0, 10));
                 }
             }
             else
             {
-                core.GameField.Clear();
-                core.GameField.Append(PreInstallField);
+                data.GameField.Clear();
+                data.GameField.Append(PreInstallField);
             }
-            core.RefreshCuplesData();
-            PreInstallField = string.Empty;
+            data.RefreshCuplesData();
+            HistoryField = data.GameField.ToString();
             return true;
         }
-        public void Undo()
-        {
 
+        public object Redo(CoreData data)
+        {
+            throw new NotImplementedException();
         }
+        public object Undo(CoreData data)
+        {
+            data.GameField.Clear();
+            data.GameField.Append(HistoryField);
+            data.RefreshCuplesData();
+            return true;
+        }
+
     }
 }

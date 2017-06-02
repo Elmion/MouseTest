@@ -45,8 +45,8 @@
     <Compile Include="cmdDeletePair.cs" />
     <Compile Include="cmdGenerateField.cs" />
     <Compile Include="cmdRestartGame.cs" />
+    <Compile Include="cmdRewrite.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="History.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,8 +8,8 @@ namespace MathCore
 {
   public interface ICommand
     {
-        
-        object Execute(CoreData data);
-        void Undo();
+        object Execute(CoreData data); 
+        object Undo(CoreData data);
+        object Redo(CoreData data);
     }
 }

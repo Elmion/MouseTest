@@ -8,9 +8,10 @@ namespace MathCore
 {
    public class cmdDeleteLine : ICommand
     {
+        private List<int[]> HistoryMemo; 
         public cmdDeleteLine()
         {
-
+            HistoryMemo = new List<int[]>();
         }
         public object Execute(CoreData data)
         {
@@ -33,22 +34,44 @@ namespace MathCore
                             if (data.CurrentPairList[j].NumSecond.Position > corrPosition) data.CurrentPairList[j].NumFirst.Position -= data.WidthGameField;
                         }
                         OUT.Add(i); //Номер удаленной строки для тех кому это надо
+                        HistoryMemo.Add(new int[]{ i, lenghtTail });
                         lineCount--; //количество линий уменьшилось
                         i--;//так как строку удалили интератор уменьшаем
                  }
             }
-
             //Обновялем поле
             data.GameField.Clear();
             data.GameField.Append(toAnalyse);
-
+            //Это конец игры?
             if (data.GameField.Length == 0) data.GameFinish(true); //Если линий нет то конец игры. 
-
-            return OUT;
+            //Вернем номера линий которые удалили
+            if( OUT.Count > 0) // если что то удалили то добавляемся в историю
+            {
+                data.History.Add(this);
+                return OUT;
+            }
+            else return null; // если не чего не произошло то вернем нуль
         }
-        public void Undo()
+        public object Undo(CoreData data)
         {
+            if (data.GameField.Length == 0) data.UndoGameFinish();//если был конец игры то откатываем
+            for (int i = 0; i < HistoryMemo.Count; i++)
+            {
+                //Вставили зачернутые 
+                data.GameField.Insert(HistoryMemo[i][0], new StringBuilder().Append('0',HistoryMemo[i][1]).ToString());
 
+                //Скорректировали пары
+                for (int j = 0; j < data.CurrentPairList.Count; j++)
+                {
+                    if (data.CurrentPairList[j].NumFirst.Position >  HistoryMemo[i][0]) data.CurrentPairList[j].NumFirst.Position += data.WidthGameField;
+                    if (data.CurrentPairList[j].NumSecond.Position > HistoryMemo[i][0]) data.CurrentPairList[j].NumFirst.Position += data.WidthGameField;
+                }
+            }
+            return HistoryMemo;
+        }
+        public object Redo(CoreData data)
+        {
+            return null;
         }
     }
 }

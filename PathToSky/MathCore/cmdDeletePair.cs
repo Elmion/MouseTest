@@ -8,6 +8,8 @@ namespace MathCore
 {
    public class cmdDeletePair : ICommand
     {
+        private object[] HistoryMemo;
+
         private int PosNum1;
         private int PosNum2;
 
@@ -15,27 +17,36 @@ namespace MathCore
         {
             this.PosNum1 = PositionNum1;
             this.PosNum2 = PositionNum2;
+
         }
         public object Execute(CoreData data)
         {
              //Ищем пару
             Pair pair = data.CurrentPairList.Find(x => (x.NumFirst.Position == PosNum1 || x.NumFirst.Position == PosNum2) &&
                                                   (x.NumSecond.Position == PosNum1 || x.NumSecond.Position == PosNum2));
-
-             
-            if (pair == null) return false;
+            if (pair == null) return null;
+            HistoryMemo = new object[] { pair.NumFirst.Value, pair.NumSecond.Value, pair.NumFirst.Position, pair.NumSecond.Position };
             data.GameField[pair.NumFirst.Position] = '0';
             data.GameField[pair.NumSecond.Position] = '0';
-
             //Занести в историю изменения
-
             data.CurrentPairList.Remove(pair);
+            //корректируем пары, путем пересоздания, ибо городить доп логику ошибок больше может стать и не факт что быстрее
+            data.RefreshCuplesData();
+            //ищем ближайшие цифры по горизонтали
             return true;
         }
 
-        public void Undo()
+        public object Redo(CoreData data)
         {
             throw new NotImplementedException();
+        }
+
+        public object Undo(CoreData data)
+        {
+            data.GameField[(int)HistoryMemo[2]] = (char)HistoryMemo[0];
+            data.GameField[(int)HistoryMemo[3]] = (char)HistoryMemo[1];
+            data.RefreshCuplesData();
+            return true;
         }
     }
 }

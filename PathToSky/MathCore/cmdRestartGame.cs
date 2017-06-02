@@ -17,9 +17,16 @@ namespace MathCore
             throw new NotImplementedException();
         }
 
-        public void Undo()
+        public object Redo(CoreData data)
         {
             throw new NotImplementedException();
         }
+
+        public object Undo(CoreData data)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
