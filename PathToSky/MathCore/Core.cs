@@ -9,6 +9,34 @@ namespace MathCore
     public class Core
     {
         public static Random rnd = new Random();
+        public string Field
+        { 
+            get
+            {
+                return  data.GameField.ToString();
+            }
+            private set { }
+         }
+        public List<Pair> CurrentPairs
+        {
+            get
+            {
+                return data.CurrentPairList;
+            }
+            private set { }
+        }
+        public GameStates GameState
+        {
+            get
+            {
+                if (data.GameEnd)
+                {
+                    if (data.GameWin) return GameStates.GameWin; else return GameStates.GameOver;
+                    
+                }
+                return GameStates.Processed;
+            }
+        }
         private CoreData data;
         private int HistoryIndex = 0;
 
@@ -37,7 +65,8 @@ namespace MathCore
         {
             return data.GetPairAtPosition(FirstPosition,SecondPosition) == null ? false : true;
         }
-        public List<string> GetReport()
+        
+        public List<string> GetConsoleReport()
         {
             List<string> OUT = new List<string>();
 
@@ -161,6 +190,11 @@ namespace MathCore
                     prevPosition = current;
                 }
             }
+            //Удалем дублирующиеся пары
+            for (int i = 0; i < CurrentPairList.Count; i++)
+            {
+                CurrentPairList.Remove(CurrentPairList.Find(x => x == CurrentPairList[i] && !CurrentPairList[i].Equals(x)));
+            }
         }
         //Ищем пару по позиции в строке
         public Pair GetPairAtPosition(int FirstPosition, int SecondPosition)
@@ -171,19 +205,19 @@ namespace MathCore
         //Ищем пару по прямым координатам
         public Pair GetPairAtPosition(int x1, int y1, int x2, int y2)
         {
-            int position1 = x1 * WidthGameField + y1;
-            int position2 = x2 * WidthGameField + y2;
+            int position1 = y1 * WidthGameField + x1;
+            int position2 = y2 * WidthGameField + x2;
             return GetPairAtPosition(position1, position2);
         }
         public void GameFinish(bool win)
         {
+            //Стираем всё подготавливаем данные к новой генерации
             GameEnd = true;
-            CurrentPairList.Clear();
-            GameField.Clear();
             GameWin = win;
         }
         public void UndoGameFinish()
         {
+            //Откатываем только флаги, откатить поле и пары в кометенции комады которая стирала его
             GameEnd = false;
             GameWin = false;
         }
@@ -196,6 +230,17 @@ namespace MathCore
         {
                 return NumFirst.Value + ":" + NumSecond.Value + "-" + NumFirst.Position.ToString().PadLeft(2) + ":" + NumSecond.Position.ToString().PadLeft(2);
         }
+        public static bool operator == (Pair A,Pair B)
+        {
+            return (A.NumFirst.Position == B.NumFirst.Position || A.NumFirst.Position == B.NumSecond.Position) &&
+                   (A.NumSecond.Position == B.NumFirst.Position || A.NumSecond.Position == B.NumSecond.Position) && (A.NumFirst.Position != A.NumSecond.Position); 
+        }
+        public static bool operator != (Pair A, Pair B)
+        {
+            return (A.NumFirst.Position != B.NumFirst.Position || A.NumFirst.Position != B.NumSecond.Position) && 
+                   (A.NumSecond.Position != B.NumFirst.Position || A.NumSecond.Position != B.NumSecond.Position) && (A.NumFirst.Position != A.NumSecond.Position );
+        }
+
     }
     public class FieldPosition
     {
@@ -209,5 +254,11 @@ namespace MathCore
         {
             return new FieldPosition() { Value = Value, Position = Position };
         }
+    }
+    public enum GameStates
+    {
+        Processed,
+        GameOver,
+        GameWin
     }
 }

@@ -17,16 +17,15 @@ namespace ViewGame
         {
             InitializeComponent();
             Core c =  new Core();
-            c.Run(new cmdGenerateField("0"));
+            c.Run(new cmdGenerateField("020000300" + "020000300" + "020000000"));
+            c.Run(new cmdDeletePair(1, 10));
             DrawConsoleReport(c);
-            c.Run(new cmdDeletePair(6, 15));
-            DrawConsoleReport(c);
-            c.Run(new cmdDeleteLine());
+            c.Undo();
             DrawConsoleReport(c);
         }
         public void DrawConsoleReport(Core c)
         {
-            List<string> s = c.GetReport();
+            List<string> s = c.GetConsoleReport();
             for (int i = 0; i < s.Count; i++)
             {
                 Console.WriteLine(s[i]);

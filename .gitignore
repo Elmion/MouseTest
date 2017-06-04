@@ -22,3 +22,5 @@
 /PathToSky/ViewGame/bin/Debug
 /PathToSky/ViewGame/obj/Debug
 /.gitattributes
+/PathToSky/TestCore/obj/Debug
+/PathToSky/TestCore/bin/Debug

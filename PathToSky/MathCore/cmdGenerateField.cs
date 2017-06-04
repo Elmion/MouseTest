@@ -19,6 +19,7 @@ namespace MathCore
         }
         public object Execute(CoreData data)
         {
+            HistoryField = data.GameField.ToString();
             if (PreInstallField == string.Empty)
             {
                 data.GameField.Clear();
@@ -33,7 +34,7 @@ namespace MathCore
                 data.GameField.Append(PreInstallField);
             }
             data.RefreshCuplesData();
-            HistoryField = data.GameField.ToString();
+            data.History.Add(this);
             return true;
         }
 
@@ -45,7 +46,7 @@ namespace MathCore
         {
             data.GameField.Clear();
             data.GameField.Append(HistoryField);
-            data.RefreshCuplesData();
+            if(HistoryField != "") data.RefreshCuplesData(); //откатываемся до пустого поля но пары не формируем
             return true;
         }
 

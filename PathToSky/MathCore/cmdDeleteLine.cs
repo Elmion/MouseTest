@@ -22,16 +22,19 @@ namespace MathCore
             for (int i = 0; i < lineCount; i++)
             {
                 int lenghtTail  = data.WidthGameField;
-                if (toAnalyse.Length < i * data.WidthGameField + data.WidthGameField)  lenghtTail = toAnalyse.Length - i * data.WidthGameField; //длина остатка от поля
+                if (toAnalyse.Length < (i+1)* data.WidthGameField )  lenghtTail = toAnalyse.Length - i * data.WidthGameField; //длина остатка от поля
                 if (toAnalyse.Substring(i * data.WidthGameField, lenghtTail).Split('0').Length-1 == lenghtTail)// Узнаем сколько нулей в строчке если равно длине то удаляем
                  {
-                        toAnalyse = toAnalyse.Remove(i * data.WidthGameField, lenghtTail);
+                    //Последнюю укорочененную строчку удаляем только если она последняя.
+                     if (lenghtTail < data.WidthGameField && toAnalyse.Length > data.WidthGameField) break;
+
+                       toAnalyse = toAnalyse.Remove(i * data.WidthGameField, lenghtTail);
                        //Корректируем пары
-                       int corrPosition = i * data.WidthGameField + data.WidthGameField;// Позиция после которой нужно корректировать пары
+                       int corrPosition = (i+1)* data.WidthGameField  ;// Позиция после которой нужно корректировать пары это следующая строка за удаленной (+1) 
                        for (int j = 0; j < data.CurrentPairList.Count; j++)
                         {
-                            if (data.CurrentPairList[j].NumFirst.Position > corrPosition) data.CurrentPairList[j].NumFirst.Position  -= data.WidthGameField;
-                            if (data.CurrentPairList[j].NumSecond.Position > corrPosition) data.CurrentPairList[j].NumFirst.Position -= data.WidthGameField;
+                            if (data.CurrentPairList[j].NumFirst.Position >= corrPosition) data.CurrentPairList[j].NumFirst.Position  -= data.WidthGameField;
+                            if (data.CurrentPairList[j].NumSecond.Position >= corrPosition) data.CurrentPairList[j].NumSecond.Position -= data.WidthGameField;
                         }
                         OUT.Add(i); //Номер удаленной строки для тех кому это надо
                         HistoryMemo.Add(new int[]{ i, lenghtTail });
@@ -55,16 +58,16 @@ namespace MathCore
         public object Undo(CoreData data)
         {
             if (data.GameField.Length == 0) data.UndoGameFinish();//если был конец игры то откатываем
-            for (int i = 0; i < HistoryMemo.Count; i++)
+            for (int i = HistoryMemo.Count-1 ; i >= 0; i--)
             {
                 //Вставили зачернутые 
-                data.GameField.Insert(HistoryMemo[i][0], new StringBuilder().Append('0',HistoryMemo[i][1]).ToString());
+                data.GameField.Insert(HistoryMemo[i][0] *data.WidthGameField, new StringBuilder().Append('0',HistoryMemo[i][1]).ToString());
 
                 //Скорректировали пары
-                for (int j = 0; j < data.CurrentPairList.Count; j++)
+                for ( int j = 0; j < data.CurrentPairList.Count; j++)
                 {
-                    if (data.CurrentPairList[j].NumFirst.Position >  HistoryMemo[i][0]) data.CurrentPairList[j].NumFirst.Position += data.WidthGameField;
-                    if (data.CurrentPairList[j].NumSecond.Position > HistoryMemo[i][0]) data.CurrentPairList[j].NumFirst.Position += data.WidthGameField;
+                    if (data.CurrentPairList[j].NumFirst.Position >=  HistoryMemo[i][0] * data.WidthGameField) data.CurrentPairList[j].NumFirst.Position += data.WidthGameField;
+                    if (data.CurrentPairList[j].NumSecond.Position >= HistoryMemo[i][0] * data.WidthGameField) data.CurrentPairList[j].NumSecond.Position += data.WidthGameField;
                 }
             }
             return HistoryMemo;

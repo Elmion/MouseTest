@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewGame", "ViewGame\ViewGame.csproj", "{C9FF49B8-2434-49CF-9440-568879714319}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathCore", "MathCore\MathCore.csproj", "{15AAD07E-884D-473C-945C-50AAFAAE7ACC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCore", "TestCore\TestCore.csproj", "{767C1E0C-CEB8-4A09-98D2-03323A95CA69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{15AAD07E-884D-473C-945C-50AAFAAE7ACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15AAD07E-884D-473C-945C-50AAFAAE7ACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15AAD07E-884D-473C-945C-50AAFAAE7ACC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{767C1E0C-CEB8-4A09-98D2-03323A95CA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{767C1E0C-CEB8-4A09-98D2-03323A95CA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{767C1E0C-CEB8-4A09-98D2-03323A95CA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{767C1E0C-CEB8-4A09-98D2-03323A95CA69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
