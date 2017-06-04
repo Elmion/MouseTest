@@ -8,25 +8,29 @@ namespace MathCore
 {
     public class cmdRestartGame : ICommand
     {
+
         public cmdRestartGame()
         {
 
         }
         public object Execute(CoreData data)
         {
-            throw new NotImplementedException();
+            data.UndoGameFinish();
+            data.GameField.Clear();
+            data.CurrentPairList.Clear();
+            data.History.Clear();
+            data.HistoryIndex = 0;
+            return true;
         }
 
         public object Redo(CoreData data)
         {
             throw new NotImplementedException();
         }
-
+        //Отмена тут не предусмотрена, поэтому исполняем но не чего не возвращаем
         public object Undo(CoreData data)
         {
-            throw new NotImplementedException();
+            return null;
         }
-
-
     }
 }

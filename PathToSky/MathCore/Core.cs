@@ -38,24 +38,24 @@ namespace MathCore
             }
         }
         private CoreData data;
-        private int HistoryIndex = 0;
-
         public Core()
         {
             data = new CoreData();
-            HistoryIndex = 0;
+            data.HistoryIndex = 0;
         }
         public object Run(ICommand command)
         {
-            if (data.GameEnd == true && command.GetType() != typeof(cmdRestartGame)) return data.GameWin?"Win":"Fail";
+            if (data.GameEnd == true && command.GetType() != typeof(cmdRestartGame)) return data.GameWin? GameStates.GameWin:GameStates.GameOver;
             object OUT = command.Execute(data);
-            if (OUT != null ) HistoryIndex++; //все команды возвращают что то, иначе они не чего не пишут в историю;
+            if (OUT != null ) data.HistoryIndex++; //все команды возвращают что то, иначе они не чего не пишут в историю;
             return OUT;
         }
         public object Undo()
         {
-           if (HistoryIndex == 0) return null;
-            return data.History[--HistoryIndex].Undo(data);
+           if (data.HistoryIndex == 0) return null;
+           object OUT  = data.History[--data.HistoryIndex].Undo(data);
+           data.History.RemoveAt(data.History.Count - 1);
+           return OUT;
         }
         public bool hasPair(int x1, int y1, int x2, int y2)
         {
@@ -99,12 +99,14 @@ namespace MathCore
        public bool GameEnd { get; private set; }
        public bool GameWin { get; private set; }
        public List<ICommand> History;
+       public int  HistoryIndex = 0;
 
        public CoreData()
         {
             GameField = new StringBuilder();
             CurrentPairList = new List<Pair>();
             History = new List<ICommand>();
+            HistoryIndex = 0;
             GameEnd = false;
         }
         //Полностью обновляет пары

@@ -19,7 +19,7 @@ namespace MathCore
             if (AddationTail.Length + data.GameField.Length  > data.WidthGameField*data.MaxLengthField )//если при дописке мы выходим за границы поля то пройгрыш
             {
                 data.GameFinish(false);
-                return "Fail";
+                return GameStates.GameOver;
             }
             data.GameField.Append(AddationTail);// если всё впорядке то дописываем хвост
             data.RefreshCuplesData();

@@ -114,7 +114,6 @@ namespace TestCore
             Assert.AreEqual(c.Field, "020000300" + "020010301" + "02001");
         }
         #endregion
-
         #region cmdDeleteLine
         /// <summary>
         /// простое удаление линии
@@ -406,7 +405,7 @@ namespace TestCore
             object r = c.Run(new cmdRewrite());
             Assert.AreEqual(GameStates.GameOver, c.GameState);
             Assert.AreEqual("333333333" + "020000300" + "020000300" + "333333333" + "333333333" + "333333333" + "333333333", c.Field);
-            Assert.AreEqual("Fail", (string)r);
+            Assert.AreEqual(GameStates.GameOver, (GameStates)r);
         }
         /// <summary>
         /// Конец игры фэйл .. отмена
@@ -422,8 +421,149 @@ namespace TestCore
             c.Undo();
             Assert.AreEqual(GameStates.Processed, c.GameState);
             Assert.AreEqual("333333333" + "020000300" + "020000300" + "333333333" + "333333333" + "333333333" + "333333333", c.Field);
-        } 
+        }
         #endregion
+        #region Reset
+        [TestMethod]
+        public void TestReset()
+        {
+            Core c = new Core();
+            c.Run(new cmdGenerateField("333333333" + "020000300" + "020000300" + "333333333" + "333333333" + "333333333" + "333333333"));
+            c.Run(new cmdRewrite());
+            c.Run(new cmdRestartGame());
+            Assert.AreEqual("", c.Field);
+            Assert.AreEqual(GameStates.Processed, c.GameState);
+
+        }
+        [TestMethod]
+        public void TestReset2()
+        {
+            Core c = new Core();
+            c.Run(new cmdGenerateField("333333333" + "020000300" + "020000300" + "333333333" + "333333333" + "333333333" + "333333333"));
+            c.Run(new cmdRewrite());
+            c.Run(new cmdGenerateField("000100000" + "000000000" + "000100000"));
+            Assert.AreEqual("333333333" + "020000300" + "020000300" + "333333333" + "333333333" + "333333333" + "333333333", c.Field);
+            Assert.AreEqual(GameStates.GameOver, c.GameState);
+            c.Run(new cmdRestartGame());
+            Assert.AreEqual("", c.Field);
+            Assert.AreEqual(GameStates.Processed, c.GameState);
+            c.Run(new cmdGenerateField("000100000" + "000000000" + "000100000"));
+            Assert.AreEqual("000100000" + "000000000" + "000100000", c.Field);
+        }
+        #endregion
+
+        [TestMethod]
+        public void TestGameEmulation()
+        {
+            Core c = new Core();       
+            c.Run(new cmdGenerateField("101202303" + "303202303"));
+            c.Run(new cmdDeletePair(0, 2));
+            Assert.AreEqual("000202303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(3, 12));
+            Assert.AreEqual("000002303" + "303002303", c.Field);
+            c.Run(new cmdDeletePair(8, 9));
+            Assert.AreEqual("000002300" + "003002303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000002303" + "303002303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000202303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(3, 5));
+            Assert.AreEqual("000000303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(6, 8));
+            Assert.AreEqual("000000000" + "303202303", c.Field);
+            c.Run(new cmdDeleteLine());
+            Assert.AreEqual("303202303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000000000" + "303202303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000000303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(8, 9));
+            Assert.AreEqual("000000300" + "003202303", c.Field);
+            c.Run(new cmdDeletePair(6, 15));
+            Assert.AreEqual("000000000" + "003202003", c.Field);
+            c.Run(new cmdDeleteLine());
+            Assert.AreEqual("003202003", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual("003202003" +"3223", c.Field);
+            c.Undo();
+            Assert.AreEqual("003202003", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual("003202003" + "3223", c.Field);
+            c.Run(new cmdDeletePair(3, 5));
+            Assert.AreEqual("003000003" + "3223", c.Field);
+            c.Run(new cmdDeletePair(2, 8));
+            Assert.AreEqual("000000000" + "3223", c.Field);
+            c.Run(new cmdDeleteLine());
+            Assert.AreEqual( "3223", c.Field);
+            c.Run(new cmdDeletePair(1, 2));
+            Assert.AreEqual("3003", c.Field);
+            c.Run(new cmdDeletePair(0, 3));
+            Assert.AreEqual("0000", c.Field);
+            c.Run(new cmdDeleteLine());
+            Assert.AreEqual(GameStates.GameWin, c.GameState);
+            object s = c.Run(new cmdDeleteLine());
+            Assert.AreEqual(GameStates.GameWin, (GameStates)s);
+            c.Run(new cmdRestartGame());
+            Assert.AreEqual(GameStates.Processed, c.GameState);
+            c.Run(new cmdGenerateField("101202303" + "303202303"));
+            Assert.AreEqual("101202303" + "303202303", c.Field);
+        }
+        [TestMethod]
+        public void TestGameEmulation2()
+        {
+            Core c = new Core();
+            c.Run(new cmdGenerateField("101202303" + "303202303"));
+            c.Run(new cmdDeletePair(0, 2));
+            Assert.AreEqual("000202303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(3, 12));
+            Assert.AreEqual("000002303" + "303002303", c.Field);
+            c.Run(new cmdDeletePair(8, 9));
+            Assert.AreEqual("000002300" + "003002303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000002303" + "303002303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000202303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(3, 5));
+            Assert.AreEqual("000000303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(6, 8));
+            Assert.AreEqual("000000000" + "303202303", c.Field);
+            c.Run(new cmdDeleteLine());
+            Assert.AreEqual("303202303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000000000" + "303202303", c.Field);
+            c.Undo();
+            Assert.AreEqual("000000303" + "303202303", c.Field);
+            c.Run(new cmdDeletePair(8, 9));
+            Assert.AreEqual("000000300" + "003202303", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual("000000300" + "003202303"+"332233", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual("000000300" + "003202303" + "332233332"+"233332233", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual("000000300" + "003202303" + "332233332" + "233332233"+ "332233332" + "233332233"+ "332233", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual("000000300"
+                          + "003202303"
+                          + "332233332"
+                          + "233332233"
+                          + "332233332"
+                          + "233332233"
+                          + "332233332"
+                          + "233332233"
+                          + "332233332"
+                          + "233332233"
+                          + "332233332"
+                          + "233332233", c.Field);
+            c.Run(new cmdRewrite());
+            Assert.AreEqual(GameStates.GameOver, c.GameState);
+            object s = c.Run(new cmdDeleteLine());
+            Assert.AreEqual(GameStates.GameOver, (GameStates)s);
+            c.Run(new cmdRestartGame());
+            Assert.AreEqual(GameStates.Processed, c.GameState);
+            c.Run(new cmdGenerateField("101202303" + "303202303"));
+            Assert.AreEqual("101202303" + "303202303", c.Field);
+
+        }
     }
 
 
