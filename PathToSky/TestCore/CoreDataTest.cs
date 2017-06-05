@@ -15,29 +15,33 @@ namespace TestCore
         public void TestRefreshPairStandardField()
         {
             CoreData data = new CoreData();
-            data.GameField = new StringBuilder("001002001" + "001002001" + "300500050");
+            data.GameField = new StringBuilder("001002001" + "001002001" + "300500057" + "000000003");
             data.RefreshCuplesData();
-            Assert.AreEqual(data.CurrentPairList.Count, 5);
-            Assert.AreEqual(data.CurrentPairList[0].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[0].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList.Count, 6);
+            Assert.AreEqual(data.CurrentPairList[0].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[0].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[0].NumFirst.Position, 8);
             Assert.AreEqual(data.CurrentPairList[0].NumSecond.Position, 11);
-            Assert.AreEqual(data.CurrentPairList[1].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[1].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList[1].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[1].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[1].NumFirst.Position, 2);
             Assert.AreEqual(data.CurrentPairList[1].NumSecond.Position, 11);
-            Assert.AreEqual(data.CurrentPairList[2].NumFirst.Value, '2');
-            Assert.AreEqual(data.CurrentPairList[2].NumSecond.Value, '2');
+            Assert.AreEqual(data.CurrentPairList[2].NumFirst.OrginChar, '2');
+            Assert.AreEqual(data.CurrentPairList[2].NumSecond.OrginChar, '2');
             Assert.AreEqual(data.CurrentPairList[2].NumFirst.Position, 5);
             Assert.AreEqual(data.CurrentPairList[2].NumSecond.Position, 14);
-            Assert.AreEqual(data.CurrentPairList[3].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[3].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList[3].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[3].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[3].NumFirst.Position, 8);
             Assert.AreEqual(data.CurrentPairList[3].NumSecond.Position, 17);
-            Assert.AreEqual(data.CurrentPairList[4].NumFirst.Value, '5');
-            Assert.AreEqual(data.CurrentPairList[4].NumSecond.Value, '5');
+            Assert.AreEqual(data.CurrentPairList[4].NumFirst.OrginChar, '5');
+            Assert.AreEqual(data.CurrentPairList[4].NumSecond.OrginChar, '5');
             Assert.AreEqual(data.CurrentPairList[4].NumFirst.Position, 21);
             Assert.AreEqual(data.CurrentPairList[4].NumSecond.Position, 25);
+            Assert.AreEqual(data.CurrentPairList[5].NumFirst.OrginChar, '7');
+            Assert.AreEqual(data.CurrentPairList[5].NumSecond.OrginChar, '3');
+            Assert.AreEqual(data.CurrentPairList[5].NumFirst.Position, 26);
+            Assert.AreEqual(data.CurrentPairList[5].NumSecond.Position, 35);
         }
 
         /// <summary>
@@ -50,24 +54,24 @@ namespace TestCore
             data.GameField = new StringBuilder("001002001" + "001002001" + "344");
             data.RefreshCuplesData();
             Assert.AreEqual(data.CurrentPairList.Count, 5);
-            Assert.AreEqual(data.CurrentPairList[0].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[0].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList[0].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[0].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[0].NumFirst.Position, 8);
             Assert.AreEqual(data.CurrentPairList[0].NumSecond.Position, 11);
-            Assert.AreEqual(data.CurrentPairList[1].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[1].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList[1].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[1].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[1].NumFirst.Position, 2);
             Assert.AreEqual(data.CurrentPairList[1].NumSecond.Position, 11);
-            Assert.AreEqual(data.CurrentPairList[2].NumFirst.Value, '2');
-            Assert.AreEqual(data.CurrentPairList[2].NumSecond.Value, '2');
+            Assert.AreEqual(data.CurrentPairList[2].NumFirst.OrginChar, '2');
+            Assert.AreEqual(data.CurrentPairList[2].NumSecond.OrginChar, '2');
             Assert.AreEqual(data.CurrentPairList[2].NumFirst.Position, 5);
             Assert.AreEqual(data.CurrentPairList[2].NumSecond.Position, 14);
-            Assert.AreEqual(data.CurrentPairList[3].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[3].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList[3].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[3].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[3].NumFirst.Position, 8);
             Assert.AreEqual(data.CurrentPairList[3].NumSecond.Position, 17);
-            Assert.AreEqual(data.CurrentPairList[4].NumFirst.Value, '4');
-            Assert.AreEqual(data.CurrentPairList[4].NumSecond.Value, '4');
+            Assert.AreEqual(data.CurrentPairList[4].NumFirst.OrginChar, '4');
+            Assert.AreEqual(data.CurrentPairList[4].NumSecond.OrginChar, '4');
             Assert.AreEqual(data.CurrentPairList[4].NumFirst.Position, 19);
             Assert.AreEqual(data.CurrentPairList[4].NumSecond.Position, 20);
         }
@@ -82,8 +86,8 @@ namespace TestCore
             data.GameField = new StringBuilder("001001");
             data.RefreshCuplesData();
             Assert.AreEqual(data.CurrentPairList.Count, 1);
-            Assert.AreEqual(data.CurrentPairList[0].NumFirst.Value, '1');
-            Assert.AreEqual(data.CurrentPairList[0].NumSecond.Value, '1');
+            Assert.AreEqual(data.CurrentPairList[0].NumFirst.OrginChar, '1');
+            Assert.AreEqual(data.CurrentPairList[0].NumSecond.OrginChar, '1');
             Assert.AreEqual(data.CurrentPairList[0].NumFirst.Position, 2);
             Assert.AreEqual(data.CurrentPairList[0].NumSecond.Position, 5);
         }

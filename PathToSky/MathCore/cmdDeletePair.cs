@@ -25,7 +25,7 @@ namespace MathCore
             Pair pair = data.CurrentPairList.Find(x => (x.NumFirst.Position == PosNum1 || x.NumFirst.Position == PosNum2) &&
                                                   (x.NumSecond.Position == PosNum1 || x.NumSecond.Position == PosNum2));
             if (pair.Equals(null)) return null;
-            HistoryMemo = new object[] { pair.NumFirst.Value, pair.NumSecond.Value, pair.NumFirst.Position, pair.NumSecond.Position };
+            HistoryMemo = new object[] { pair.NumFirst, pair.NumSecond};
             data.History.Add(this);
             data.GameField[pair.NumFirst.Position] = '0';
             data.GameField[pair.NumSecond.Position] = '0';
@@ -44,8 +44,8 @@ namespace MathCore
 
         public object Undo(CoreData data)
         {
-            data.GameField[(int)HistoryMemo[2]] = (char)HistoryMemo[0];
-            data.GameField[(int)HistoryMemo[3]] = (char)HistoryMemo[1];
+            data.GameField[((FieldPosition)HistoryMemo[0]).Position] = ((FieldPosition)HistoryMemo[0]).OrginChar;
+            data.GameField[((FieldPosition)HistoryMemo[1]).Position] = ((FieldPosition)HistoryMemo[1]).OrginChar;
             data.RefreshCuplesData();
             return true;
         }

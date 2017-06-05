@@ -117,9 +117,7 @@ namespace MathCore
             FieldPosition[] VerticalBuff = new FieldPosition[WidthGameField];
 
             //Берем первыю позицию 
-            FieldPosition prevPosition = new FieldPosition();
-            prevPosition.Value = GameField[0];
-            prevPosition.Position = 0;
+            FieldPosition prevPosition = new FieldPosition(0, GameField[0]);
             VerticalBuff[0] = prevPosition;
 
             // Определяем длину первой строчки .. если строчка больше чем ширина поля то перая строка равна ширене поля.
@@ -132,20 +130,16 @@ namespace MathCore
             {
 
                 //Инициализируем Вертикальный буффер. Собственно из за него первый ряд и расчитывается отельно
-                VerticalBuff[i] = new FieldPosition();
-                VerticalBuff[i].Value = GameField[i];
-                VerticalBuff[i].Position = i;
+                VerticalBuff[i] = new FieldPosition(i, GameField[i]);
 
                 //Пропускаем нули
                 if (GameField[i] == '0') continue;
                 //Если не нуль, то начинаем анализ
                 //
-                FieldPosition current = new FieldPosition();
-                current.Value = GameField[i];
-                current.Position = i;
+                FieldPosition current = new FieldPosition(i, GameField[i]);
 
                 //Горизонтальное сравнение
-                if (prevPosition.Value == GameField[i])
+                if (prevPosition.CanConnectWith(current))
                 {
                     //Формируем пару
                     Pair p = new Pair();
@@ -165,12 +159,10 @@ namespace MathCore
                     if (GameField[i] == '0') continue;
                     //Если не нуль, то начинаем анализ
 
-                    FieldPosition current = new FieldPosition();
-                    current.Value = GameField[i];
-                    current.Position = i;
+                    FieldPosition current = new FieldPosition(i, GameField[i]);
 
                     //Горизонтальное сравнение
-                    if (prevPosition.Value == GameField[i])
+                    if (prevPosition.CanConnectWith(current))
                     {
                         //Формируем пару
                         Pair p = new Pair();
@@ -179,7 +171,7 @@ namespace MathCore
                         CurrentPairList.Add(p);
                     }
                     //Вертикальное сравнение
-                    if (GameField[i] == VerticalBuff[i % WidthGameField].Value)
+                    if (VerticalBuff[i % WidthGameField].Value.Contains(GameField[i]))
                     {
                         Pair p = new Pair();
                         p.NumFirst = VerticalBuff[i % WidthGameField].Clone();
@@ -187,8 +179,8 @@ namespace MathCore
                         CurrentPairList.Add(p);
                     }
                     //Заменяем местов  вертикальном буфере 
-                    VerticalBuff[i % WidthGameField].Value = GameField[i];
-                    VerticalBuff[i % WidthGameField].Position = i;
+                    VerticalBuff[i % WidthGameField]  = new  FieldPosition(i,GameField[i]);
+
                     prevPosition = current;
                 }
             }
@@ -246,15 +238,40 @@ namespace MathCore
     }
     public class FieldPosition
     {
-        public char Value;
+        public static Dictionary<char, List<char>> FieldsLinks = new Dictionary<char, List<char>>()
+        {
+            { '0',  new List<char>() {'0'} },
+            { '1',  new List<char>() {'1','9'} },
+            { '2',  new List<char>() {'2','8'} },
+            { '3',  new List<char>() {'3','7'} },
+            { '4',  new List<char>() {'4','6'} },
+            { '5',  new List<char>() {'5'} },
+            { '6',  new List<char>() {'6','4'} },
+            { '7',  new List<char>() {'7','3'} },
+            { '8',  new List<char>() {'8','2'} },
+            { '9',  new List<char>() {'9','1'} },
+        };
+
+        public List<char> Value;
         public int Position;
+        public char OrginChar { get; private set; }
+        public FieldPosition(int position, char value)
+        {
+            Position = position;
+            Value = FieldsLinks[value];
+            OrginChar = value;
+        }
         public override string ToString()
         {
             return  "Value= "+ Value + "; Position= " + Position;
         }
         public FieldPosition Clone()
         {
-            return new FieldPosition() { Value = Value, Position = Position };
+            return new FieldPosition(Position, OrginChar);
+        }
+        public bool CanConnectWith(FieldPosition ValueB)
+        {
+            return Value.Intersect(ValueB.Value).Count() > 0 ? true : false;
         }
     }
     public enum GameStates
