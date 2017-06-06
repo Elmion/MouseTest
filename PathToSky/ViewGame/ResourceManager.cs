@@ -33,6 +33,8 @@ namespace ViewGame
                     return ViewGame.Properties.Resources.Num_08;
                 case '9':
                     return ViewGame.Properties.Resources.Num_09;
+                case 'f':
+                    return ViewGame.Properties.Resources.Frame;
             }
             return null;
         }

@@ -24,7 +24,7 @@ namespace MathCore
              //Ищем пару
             Pair pair = data.CurrentPairList.Find(x => (x.NumFirst.Position == PosNum1 || x.NumFirst.Position == PosNum2) &&
                                                   (x.NumSecond.Position == PosNum1 || x.NumSecond.Position == PosNum2));
-            if (pair.Equals(null)) return null;
+            if (((object)pair) == null) return null;
             HistoryMemo = new object[] { pair.NumFirst, pair.NumSecond};
             data.History.Add(this);
             data.GameField[pair.NumFirst.Position] = '0';

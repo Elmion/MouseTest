@@ -226,6 +226,7 @@ namespace MathCore
         }
         public static bool operator == (Pair A,Pair B)
         {
+            
             return (A.NumFirst.Position == B.NumFirst.Position || A.NumFirst.Position == B.NumSecond.Position) &&
                    (A.NumSecond.Position == B.NumFirst.Position || A.NumSecond.Position == B.NumSecond.Position) && (A.NumFirst.Position != A.NumSecond.Position); 
         }

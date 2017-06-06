@@ -68,6 +68,16 @@ namespace TestCore
             Assert.AreEqual(c.Field, "000000300" + "000000300" + "020000000");
         }
         /// <summary>
+        /// Удаление неверной пары
+        /// </summary>
+        [TestMethod]
+        public void TestcmdDeletePairFalse()
+        {
+            Core c = new Core();
+            c.Run(new cmdGenerateField("020000300" + "020000300" + "020000000"));
+            Assert.AreEqual(null, c.Run(new cmdDeletePair(1, 9)));
+        }
+        /// <summary>
         /// Удаление пары, отмена
         /// </summary>
         [TestMethod]
