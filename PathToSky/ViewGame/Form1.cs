@@ -15,15 +15,15 @@ namespace ViewGame
     public partial class Form1 : Form
     {
         const int SIZE_TILE = 25;
-        Core c;
+        private Core c;
         PaintInfo pInfo;
-        InputManager iManager;
+        GameViewManager iManager;
         public Form1()
         {
             InitializeComponent();
             c =  new Core();
             pInfo = new PaintInfo();
-            iManager = new InputManager(panel1);
+            iManager = new GameViewManager(panel1, GetField , GetPairs);
             iManager.PairReady += IManager_PairReady;
             c.Run(new cmdGenerateField("123456789" +
                                        "123456789" +
@@ -39,7 +39,17 @@ namespace ViewGame
                                        "123456789" ));
             
         }
-
+        //Две дергалки свойств дабы не отдавать Core  во вью
+        #region Дергалки
+        private string GetField()
+        {
+            return c.Field;
+        }
+        private List<Pair> GetPairs()
+        {
+            return c.CurrentPairs;
+        } 
+        #endregion
         private void IManager_PairReady(int arg1, int arg2)
         {
             c.Run(new cmdDeletePair(arg1, arg2));
@@ -68,25 +78,29 @@ namespace ViewGame
         const int SIZE_TILE = 25;
         public event Action<int,int> PairReady;
         private Panel gamePanel;
-        private FieldPosition OnePosition;
-        private FieldPosition TwoPosition;
-        public GameViewManager(Panel p)
+        private FieldPosition SelectedFrameStringPosition;//позиция рамки в string координатах
+        private Point SelectedFrameDrawingPosition;
+
+        private Func<string> GetField;
+        private Func<List<Pair>> GetPairs;
+        public GameViewManager(Panel p,Func<string> GetterField,Func<List<Pair>> GetterPairs)
         {
             gamePanel = p;
             gamePanel.MouseClick += MouseClick;
             gamePanel.Paint += GamePanel_Paint;
-            OnePosition = null;
-            TwoPosition = null;
+            SelectedFrameStringPosition = null;
+            GetField = GetterField;
+            GetPairs = GetterPairs;
         }
-
         private void GamePanel_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = panel1.CreateGraphics();
-            for (int i = 0; i < c.Field.Length; i++)
+            Graphics g = gamePanel.CreateGraphics();
+            string DrawingField = GetField();
+            for (int i = 0; i < GetField().Length; i++)
             {
-                g.DrawImage(ResourceManager.GetBitMap(c.Field[i]), new Rectangle((i % 9) * SIZE_TILE, (int)((i / 9) * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
+                g.DrawImage(ResourceManager.GetBitMap(DrawingField[i]), new Rectangle((i % 9) * SIZE_TILE, (int)((i / 9) * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
             }
-            if (pInfo.SelectFrameVisible)
+            if (SelectedFrameStringPosition != null)
             {
                 g.DrawRectangle(new Pen(Brushes.Black, 3), new Rectangle(pInfo.PositionFrame.X * SIZE_TILE, (int)(pInfo.PositionFrame.Y * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
             }
@@ -94,35 +108,36 @@ namespace ViewGame
 
         void MouseClick(object sender, MouseEventArgs e)
         {
-            if (OnePosition == null)
-            { 
-                OnePosition = new FieldPosition((e.X/ SIZE_TILE) + (int)((e.Y/ (SIZE_TILE * 1.4f) )) * 9, '0');
-                pInfo.SetFramAt((int)e.X / SIZE_TILE, (int)(e.Y / (SIZE_TILE * 1.4f)));
-                gamePanel.Invalidate(new Rectangle((e.X / SIZE_TILE) * SIZE_TILE,(int)(e.Y / (SIZE_TILE * 1.4f) * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
+            if (SelectedFrameStringPosition == null)
+            {
+                SelectedFrameStringPosition = new FieldPosition(PositionConvertor.MouseXYToStringX(e.X,e.Y), '0');
+                SelectedFrameDrawingPosition = new Point(PositionConvertor.SnapToGridX(e.X), PositionConvertor.SnapToGridY(e.Y));
+
+                gamePanel.Invalidate(new Rectangle(SelectedFrameDrawingPosition (e.X / SIZE_TILE) * SIZE_TILE,(int)(e.Y / (SIZE_TILE * 1.4f) * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
             }
             else
             {
-                TwoPosition = new FieldPosition((e.X / SIZE_TILE) + (int)((e.Y / (SIZE_TILE * 1.4f))) * 9, '0');
-                PairReady(OnePosition.Position, TwoPosition.Position);
-                OnePosition = null;
-                TwoPosition = null;
-                gamePanel.Invalidate(new Rectangle(pInfo.PositionFrame.X * SIZE_TILE - 2, (int)(pInfo.PositionFrame.Y * SIZE_TILE * 1.4f) - 2, SIZE_TILE + 4, (int)(SIZE_TILE * 1.4f + 4)));
+                PairReady(SelectedFrameStringPosition.Position, PositionConvertor.MouseXYToStringX(e.X,e.Y)); //отправляем запрос в Ядро
+                SelectedFrameStringPosition = null;
+                gamePanel.Invalidate(new Rectangle(SelectedFrameDrawingPosition, new Size(SIZE_TILE + 4, (int)(SIZE_TILE * 1.4f + 4))));
             }
         }
-        
     }
-    public class PaintInfo
+    public class PositionConvertor
     {
-        public bool SelectFrameVisible = false;
-        public Point PositionFrame;
-        public PaintInfo()
+        const int SIZE_TILE = 25;
+        public static int SnapToGridX(int mouseCoordinate)
         {
-            PositionFrame = new Point();
+            return (mouseCoordinate / SIZE_TILE) * SIZE_TILE;
         }
-        public void SetFramAt(int x, int y)
+        public static int SnapToGridY(int mouseCoordinate)
         {
-            SelectFrameVisible = !SelectFrameVisible;
-            PositionFrame = new Point(x, y);
+            int buff = (int)Math.Floor(SIZE_TILE * 1.4f);
+            return (mouseCoordinate / buff) * buff;
+        }
+        public static int MouseXYToStringX(int x,int y)
+        {
+            return (x / SIZE_TILE) + (int)((y / (SIZE_TILE * 1.4f))) * 9; //9 размер поля
         }
     }
 }
