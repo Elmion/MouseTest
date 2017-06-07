@@ -16,13 +16,16 @@ namespace ViewGame
     {
         const int SIZE_TILE = 25;
         private Core c;
-        GameViewManager iManager;
+        GameViewManager GameView;
         public Form1()
         {
             InitializeComponent();
+            cbDeletesLine.Checked = true;//По умолчанию удаляем линии
             c =  new Core();
-            iManager = new GameViewManager(panel1, GetField , GetPairs);
-            iManager.PairReady += IManager_PairReady;
+            GameView = new GameViewManager(panel1, GetField , GetPairs);
+            GameView.PairReady += IManager_PairReady;
+            cbDeletesLine.CheckedChanged += ChangeDeleteLine;
+
             c.Run(new cmdGenerateField("123456789" +
                                        "123456789" +
                                        "123456789" +
@@ -72,6 +75,15 @@ namespace ViewGame
             c.Undo();
             panel1.Invalidate();
         }
+        private void ChangeDeleteLine(object sender, EventArgs e)
+        {
+            GameView.LinesDeletes = cbDeletesLine.Checked;
+            if(cbDeletesLine.Checked)
+            {
+                CheckLines();
+            }
+        }
+
     }
     public class GameViewManager
     {
