@@ -16,24 +16,14 @@ namespace ViewGame
     {
         const int SIZE_TILE = 25;
         private Core c;
-        PaintInfo pInfo;
         GameViewManager iManager;
         public Form1()
         {
             InitializeComponent();
             c =  new Core();
-            pInfo = new PaintInfo();
             iManager = new GameViewManager(panel1, GetField , GetPairs);
             iManager.PairReady += IManager_PairReady;
             c.Run(new cmdGenerateField("123456789" +
-                                       "123456789" +
-                                       "123456789" +
-                                       "123456789" +
-                                       "123456789" +
-                                       "123456789" +
-                                       "123456789" +
-                                       "123456789" +
-                                       "123456789" +
                                        "123456789" +
                                        "123456789" +
                                        "123456789" ));
@@ -50,10 +40,9 @@ namespace ViewGame
             return c.CurrentPairs;
         } 
         #endregion
-        private void IManager_PairReady(int arg1, int arg2)
+        private object IManager_PairReady(int arg1, int arg2)
         {
-            c.Run(new cmdDeletePair(arg1, arg2));
-            panel1.Invalidate();
+            return c.Run(new cmdDeletePair(arg1, arg2));
         }
 
         public void DrawConsoleReport(Core c)
@@ -64,19 +53,31 @@ namespace ViewGame
                 Console.WriteLine(s[i]);
             }
         }  
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        public void CheckLines()
         {
-
+            if(c.haveLineToDelete)
+            {
+                c.Run(new cmdDeleteLine());
+                panel1.Invalidate();
+            }
         }
-        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        private void bRewrite_Click(object sender, EventArgs e)
         {
+            c.Run(new cmdRewrite());
+            panel1.Invalidate();
+        }
 
+        private void moveCancel_Click(object sender, EventArgs e)
+        {
+            c.Undo();
+            panel1.Invalidate();
         }
     }
     public class GameViewManager
     {
         const int SIZE_TILE = 25;
-        public event Action<int,int> PairReady;
+        public event Func<int,int, object> PairReady;
+        public bool LinesDeletes = true;
         private Panel gamePanel;
         private FieldPosition SelectedFrameStringPosition;//позиция рамки в string координатах
         private Point SelectedFrameDrawingPosition;
@@ -98,28 +99,31 @@ namespace ViewGame
             string DrawingField = GetField();
             for (int i = 0; i < GetField().Length; i++)
             {
-                g.DrawImage(ResourceManager.GetBitMap(DrawingField[i]), new Rectangle((i % 9) * SIZE_TILE, (int)((i / 9) * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
+                g.DrawImage(ResourceManager.GetBitMap(DrawingField[i]), new Rectangle(PositionConvertor.StringXToSnapGridXY(i), PositionConvertor.GetTileSize()));
             }
             if (SelectedFrameStringPosition != null)
             {
-                g.DrawRectangle(new Pen(Brushes.Black, 3), new Rectangle(pInfo.PositionFrame.X * SIZE_TILE, (int)(pInfo.PositionFrame.Y * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
+                g.DrawRectangle(new Pen(Brushes.Black, 3), new Rectangle(SelectedFrameDrawingPosition, PositionConvertor.GetTileSize()));
             }
         }
 
         void MouseClick(object sender, MouseEventArgs e)
         {
+            const int AREA = 3;
             if (SelectedFrameStringPosition == null)
             {
                 SelectedFrameStringPosition = new FieldPosition(PositionConvertor.MouseXYToStringX(e.X,e.Y), '0');
                 SelectedFrameDrawingPosition = new Point(PositionConvertor.SnapToGridX(e.X), PositionConvertor.SnapToGridY(e.Y));
-
-                gamePanel.Invalidate(new Rectangle(SelectedFrameDrawingPosition (e.X / SIZE_TILE) * SIZE_TILE,(int)(e.Y / (SIZE_TILE * 1.4f) * SIZE_TILE * 1.4f), SIZE_TILE, (int)(SIZE_TILE * 1.4f)));
+                gamePanel.Invalidate(new Rectangle(new Point(SelectedFrameDrawingPosition.X - AREA, SelectedFrameDrawingPosition.Y - AREA), PositionConvertor.GetTileSize()+ new Size(2 * AREA, 2 * AREA)));
             }
             else
             {
-                PairReady(SelectedFrameStringPosition.Position, PositionConvertor.MouseXYToStringX(e.X,e.Y)); //отправляем запрос в Ядро
+                object CoreAnswer = PairReady( SelectedFrameStringPosition.Position, PositionConvertor.MouseXYToStringX(e.X, e.Y));//отправляем запрос в Ядро
+
+                gamePanel.Invalidate(new Rectangle(new Point(PositionConvertor.SnapToGridX(e.X)- AREA, PositionConvertor.SnapToGridY(e.Y) - AREA), PositionConvertor.GetTileSize() + new Size(2*AREA, 2*AREA)));  
                 SelectedFrameStringPosition = null;
-                gamePanel.Invalidate(new Rectangle(SelectedFrameDrawingPosition, new Size(SIZE_TILE + 4, (int)(SIZE_TILE * 1.4f + 4))));
+                gamePanel.Invalidate(new Rectangle(new Point(SelectedFrameDrawingPosition.X- AREA, SelectedFrameDrawingPosition.Y - AREA), PositionConvertor.GetTileSize()+ new Size(2*AREA, 2*AREA)));
+                if (LinesDeletes) ((Form1)gamePanel.Parent).CheckLines();
             }
         }
     }
@@ -132,12 +136,20 @@ namespace ViewGame
         }
         public static int SnapToGridY(int mouseCoordinate)
         {
-            int buff = (int)Math.Floor(SIZE_TILE * 1.4f);
+            int buff = (int)Math.Ceiling(SIZE_TILE * 1.4f);
             return (mouseCoordinate / buff) * buff;
         }
         public static int MouseXYToStringX(int x,int y)
         {
             return (x / SIZE_TILE) + (int)((y / (SIZE_TILE * 1.4f))) * 9; //9 размер поля
+        }
+        public static Size GetTileSize()
+        {
+            return new Size(SIZE_TILE + 4, (int)(SIZE_TILE * 1.4f + 4));
+        }
+        public static Point StringXToSnapGridXY(int x)
+        {
+           return new Point((x % 9) * SIZE_TILE, (int)((x / 9) * SIZE_TILE * 1.4f));
         }
     }
 }

@@ -285,6 +285,29 @@ namespace TestCore
             Assert.AreEqual(12, c.CurrentPairs[1].NumFirst.Position);
 
         }
+
+        /// <summary>
+        /// Тест нужности удаления линии - вариант где нужно 
+        /// </summary>
+        [TestMethod]
+        public void CheckPossibilityRemovalTrue()
+        {
+            CoreData c = new CoreData();
+            c.GameField = new StringBuilder("020000300" + "000000000" + "020303000" + "000000000" + "000001000");
+            c.RefreshCuplesData();
+            Assert.AreEqual(true, new cmdDeleteLine().CheckPossibilityRemoval(c));
+        }
+        /// <summary>
+        /// Тест нужности удаления линии - вариант где не нужно 
+        /// </summary>
+        [TestMethod]
+        public void CheckPossibilityRemovalFasle()
+        {
+            CoreData c = new CoreData();
+            c.GameField = new StringBuilder("020000300" +  "020303000"  + "000001000");
+            c.RefreshCuplesData();
+            Assert.AreEqual(false, new cmdDeleteLine().CheckPossibilityRemoval(c));
+        }
         /// <summary>
         /// Провека сдвига назад при отмене
         /// </summary>

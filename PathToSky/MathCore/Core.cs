@@ -37,6 +37,13 @@ namespace MathCore
                 return GameStates.Processed;
             }
         }
+        public bool haveLineToDelete
+        {
+            get
+            {
+                return new cmdDeleteLine().CheckPossibilityRemoval(data);
+            }
+        }
         private CoreData data;
         public Core()
         {

@@ -55,6 +55,31 @@ namespace MathCore
             }
             else return null; // если не чего не произошло то вернем нуль
         }
+
+        /// <summary>
+        /// Проверка возможности удаления линии, нужно для клиентов чтоб оценить нужно ли создавать новую команду
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool CheckPossibilityRemoval(CoreData data)
+        {
+            string toAnalyse = data.GameField.ToString();
+            //количество строк
+            int lineCount = (int)Math.Ceiling((double)(toAnalyse.Length) / data.WidthGameField);
+            for (int i = 0; i < lineCount; i++)
+            {
+                int lenghtTail = data.WidthGameField;
+                if (toAnalyse.Length < (i + 1) * data.WidthGameField) lenghtTail = toAnalyse.Length - i * data.WidthGameField; //длина остатка от поля
+                if (toAnalyse.Substring(i * data.WidthGameField, lenghtTail).Split('0').Length - 1 == lenghtTail)// Узнаем сколько нулей в строчке если равно длине то удаляем
+                {
+                    //Последнюю укорочененную строчку удаляем только если она последняя.
+                    if (lenghtTail < data.WidthGameField && toAnalyse.Length > data.WidthGameField) break;
+                    return true; //достоточно дин раз дойти до сюда чтоб сказать что есть что то на удаление
+                }
+            }
+            //А если дошли до сюда то линий к удалению нет
+            return false;
+        }
         public object Undo(CoreData data)
         {
             if (data.GameField.Length == 0) data.UndoGameFinish();//если был конец игры то откатываем
