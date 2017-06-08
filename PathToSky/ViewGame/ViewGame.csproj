@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,11 +56,38 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FullGameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FullGameForm.Designer.cs">
+      <DependentUpon>FullGameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelPlaner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelPlaner.Designer.cs">
+      <DependentUpon>LevelPlaner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelsList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LevelsList.Designer.cs">
+      <DependentUpon>LevelsList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManager.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FullGameForm.resx">
+      <DependentUpon>FullGameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelPlaner.resx">
+      <DependentUpon>LevelPlaner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelsList.resx">
+      <DependentUpon>LevelsList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

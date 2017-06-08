@@ -20,7 +20,7 @@ namespace MathCore
             data.CurrentPairList.Clear();
             data.History.Clear();
             data.HistoryIndex = 0;
-            return true;
+            return null;
         }
 
         public object Redo(CoreData data)

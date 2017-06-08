@@ -304,7 +304,7 @@ namespace TestCore
         public void CheckPossibilityRemovalFasle()
         {
             CoreData c = new CoreData();
-            c.GameField = new StringBuilder("020000300" +  "020303000"  + "000001000");
+            c.GameField = new StringBuilder("020000300" + "020303000" + "000001000");
             c.RefreshCuplesData();
             Assert.AreEqual(false, new cmdDeleteLine().CheckPossibilityRemoval(c));
         }
@@ -488,7 +488,7 @@ namespace TestCore
         [TestMethod]
         public void TestGameEmulation()
         {
-            Core c = new Core();       
+            Core c = new Core();
             c.Run(new cmdGenerateField("101202303" + "303202303"));
             c.Run(new cmdDeletePair(0, 2));
             Assert.AreEqual("000202303" + "303202303", c.Field);
@@ -517,7 +517,7 @@ namespace TestCore
             c.Run(new cmdDeleteLine());
             Assert.AreEqual("003202003", c.Field);
             c.Run(new cmdRewrite());
-            Assert.AreEqual("003202003" +"3223", c.Field);
+            Assert.AreEqual("003202003" + "3223", c.Field);
             c.Undo();
             Assert.AreEqual("003202003", c.Field);
             c.Run(new cmdRewrite());
@@ -527,7 +527,7 @@ namespace TestCore
             c.Run(new cmdDeletePair(2, 8));
             Assert.AreEqual("000000000" + "3223", c.Field);
             c.Run(new cmdDeleteLine());
-            Assert.AreEqual( "3223", c.Field);
+            Assert.AreEqual("3223", c.Field);
             c.Run(new cmdDeletePair(1, 2));
             Assert.AreEqual("3003", c.Field);
             c.Run(new cmdDeletePair(0, 3));
@@ -569,11 +569,11 @@ namespace TestCore
             c.Run(new cmdDeletePair(8, 9));
             Assert.AreEqual("000000300" + "003202303", c.Field);
             c.Run(new cmdRewrite());
-            Assert.AreEqual("000000300" + "003202303"+"332233", c.Field);
+            Assert.AreEqual("000000300" + "003202303" + "332233", c.Field);
             c.Run(new cmdRewrite());
-            Assert.AreEqual("000000300" + "003202303" + "332233332"+"233332233", c.Field);
+            Assert.AreEqual("000000300" + "003202303" + "332233332" + "233332233", c.Field);
             c.Run(new cmdRewrite());
-            Assert.AreEqual("000000300" + "003202303" + "332233332" + "233332233"+ "332233332" + "233332233"+ "332233", c.Field);
+            Assert.AreEqual("000000300" + "003202303" + "332233332" + "233332233" + "332233332" + "233332233" + "332233", c.Field);
             c.Run(new cmdRewrite());
             Assert.AreEqual("000000300"
                           + "003202303"
@@ -596,6 +596,14 @@ namespace TestCore
             c.Run(new cmdGenerateField("101202303" + "303202303"));
             Assert.AreEqual("101202303" + "303202303", c.Field);
 
+        }
+        [TestMethod]
+        public void TestGameNullField()
+        {
+            Core c = new Core();
+            c.Run(new cmdRestartGame());
+            c.Run(new cmdGenerateField("000000303" + "303202303"));
+            c.Undo();
         }
     }
 

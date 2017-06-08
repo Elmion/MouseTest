@@ -120,6 +120,7 @@ namespace MathCore
         public void RefreshCuplesData()
         {
             CurrentPairList.Clear();
+            if (GameField.Length == 0) return;//Защита от пустого поля, список всё равно обнуляем потому что фактически пар нет.
             //Буффер для вертикального анализа 
             FieldPosition[] VerticalBuff = new FieldPosition[WidthGameField];
 
