@@ -14,14 +14,14 @@ namespace ViewGame
 
     public partial class Form1 : Form
     {
-        LevelPlaner f;
+        AnalyseForm f;
         public Form1()
         {
             InitializeComponent();
-            f = new LevelPlaner();
+            f = new AnalyseForm();
             if (f.ShowDialog(this) == DialogResult.OK)
             {
-                string StringToSave = f.FieldString; 
+
             };
         }
     }

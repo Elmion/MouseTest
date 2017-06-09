@@ -230,7 +230,7 @@ namespace MathCore
         public FieldPosition NumSecond { get; set; }
         public override string ToString()
         {
-                return NumFirst.Value + ":" + NumSecond.Value + "-" + NumFirst.Position.ToString().PadLeft(2) + ":" + NumSecond.Position.ToString().PadLeft(2);
+                return NumFirst.OrginChar + ":" + NumSecond.OrginChar + "-" + NumFirst.Position.ToString().PadLeft(2) + ":" + NumSecond.Position.ToString().PadLeft(2);
         }
         public static bool operator == (Pair A,Pair B)
         {
