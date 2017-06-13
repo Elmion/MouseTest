@@ -46,7 +46,8 @@ namespace MathCore
         {
             data.GameField[((FieldPosition)HistoryMemo[0]).Position] = ((FieldPosition)HistoryMemo[0]).OrginChar;
             data.GameField[((FieldPosition)HistoryMemo[1]).Position] = ((FieldPosition)HistoryMemo[1]).OrginChar;
-            data.RefreshCuplesData();
+
+           data.RefreshCuplesData();
             return true;
         }
     }

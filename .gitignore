@@ -24,3 +24,10 @@
 /.gitattributes
 /PathToSky/TestCore/obj/Debug
 /PathToSky/TestCore/bin/Debug
+/PathToSky/MathCore/bin/Release
+/PathToSky/MathCore/obj/Release
+/PathToSky/TestCore/bin/Release
+/PathToSky/TestCore/obj/Release
+/PathToSky/ViewGame/bin/Release
+/PathToSky/ViewGame/obj/Release/TempPE
+/PathToSky/ViewGame/obj/Release

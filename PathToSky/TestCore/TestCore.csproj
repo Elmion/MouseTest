@@ -55,11 +55,16 @@
     <Compile Include="CoreTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CoreDataTest.cs" />
+    <Compile Include="TestIdex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathCore\MathCore.csproj">
       <Project>{15aad07e-884d-473c-945c-50aafaae7acc}</Project>
       <Name>MathCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewGame\ViewGame.csproj">
+      <Project>{c9ff49b8-2434-49cf-9440-568879714319}</Project>
+      <Name>ViewGame</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

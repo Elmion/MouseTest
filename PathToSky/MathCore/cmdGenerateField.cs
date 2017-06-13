@@ -23,7 +23,7 @@ namespace MathCore
             if (PreInstallField == string.Empty)
             {
                 data.GameField.Clear();
-                for (int i = 0; i < 27; i++)
+                for (int i = 0; i < 108; i++)
                 {
                     data.GameField.Append(Core.rnd.Next(0, 10));
                 }

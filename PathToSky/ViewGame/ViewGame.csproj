@@ -56,6 +56,12 @@
     <Compile Include="AnalyseForm.Designer.cs">
       <DependentUpon>AnalyseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FieldViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FieldViewControl.Designer.cs">
+      <DependentUpon>FieldViewControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     <Compile Include="ResourceManager.cs" />
     <EmbeddedResource Include="AnalyseForm.resx">
       <DependentUpon>AnalyseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FieldViewControl.resx">
+      <DependentUpon>FieldViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
